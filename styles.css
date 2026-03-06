@@ -110,7 +110,7 @@ main { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: 
 
 /* ── MAPPA ── */
 #view-mappa.active { position: relative; padding: 0; gap: 0; background: var(--bg); }
-.map-box { position: absolute; inset: 0; border-radius: 0; overflow: hidden; border: none; box-shadow: none; background: #e8e4dc; }
+.map-box { flex: 1; min-height: 0; border-radius: 0; overflow: hidden; border: none; box-shadow: none; background: #e8e4dc; }
 .map-box iframe { width: 100%; height: 100%; border: none; display: block; }
 /* CSS Pins */
 .map-pin {
