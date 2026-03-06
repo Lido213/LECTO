@@ -376,6 +376,8 @@ input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height:
 .apt-view { padding: 0 0 .5rem; }
 .apt-group { margin-bottom: 1.25rem; }
 .wip-notice { margin: 0 1.25rem .75rem; padding: .55rem .85rem; background: #fff8e6; border: 1.5px solid #e5b34c; border-radius: 10px; font-size: .75rem; font-weight: 600; color: #7a5500; display: flex; align-items: center; gap: .4rem; }
+.wip-notice-btn { cursor: pointer; transition: background .15s, border-color .15s; }
+.wip-notice-btn:active { background: #fdefc3; border-color: #c99a2e; }
 .apt-group-header { display: flex; align-items: center; gap: .5rem; justify-content: space-between; padding: .5rem 1.25rem .5rem; border-bottom: 1px solid var(--border); margin-bottom: .5rem; flex-wrap: wrap; }
 .apt-group-name { font-family: var(--font-title); font-weight: 900; font-size: 1rem; color: var(--navy); }
 .apt-group-sub { font-size: .68rem; color: var(--muted); margin-top: .1rem; }
