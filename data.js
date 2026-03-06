@@ -60,7 +60,7 @@ const rooms = [
     name: "Stanza 1",
     zone: "Via Poncione",
     price: 450,                          // € / mese
-    status: "available",                 // "available" | "wip"
+    status: "Disponibile da Settembre",                 // "available" | "wip"
     inclusive: false,                    // utenze incluse?
     size: "~18 m²",
     desc: "Camera singola arredata al 4° piano con ascensore. Appartamento da 3 stanze con salotto, cucina attrezzata e 2 bagni. Fermata bus sotto casa.",
