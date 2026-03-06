@@ -60,7 +60,7 @@ const rooms = [
     name: "Stanza 100",
     zone: "Via Poncione",
     price: 450,                          // € / mese
-    status: "Disponibile da Settembre",                 // "available" | "wip"
+    status: "wip",                       // "available" | "wip"
     inclusive: false,                    // utenze incluse?
     size: "~18 m²",
     desc: "Camera singola arredata al 4° piano con ascensore. Appartamento da 3 stanze con salotto, cucina attrezzata e 2 bagni. Fermata bus sotto casa.",
@@ -78,7 +78,7 @@ const rooms = [
     name: "Stanza 2",
     zone: "Via Poncione",
     price: 450,
-    status: "available",
+    status: "wip",
     inclusive: false,
     size: "~18 m²",
     desc: "Camera luminosa con vista verde. Cucina con lavastoviglie, forno e Smart TV nel soggiorno condiviso.",
@@ -96,7 +96,7 @@ const rooms = [
     name: "Stanza 3",
     zone: "Via Poncione",
     price: 450,
-    status: "available",
+    status: "wip",
     inclusive: false,
     size: "~17 m²",
     desc: "Camera accogliente con ampio spazio studio. Appartamento luminoso con 2 bagni per 3 inquilini.",
@@ -171,6 +171,6 @@ const rooms = [
 // "sub" è il sottotitolo mostrato nell'intestazione del gruppo.
 
 const apartments = [
-  { name: "Via Poncione",   sub: "3 stanze · 4° piano · ascensore", zone: "Via Poncione"   },
-  { name: "Via dell'Isola", sub: "3 stanze · 2° piano · ascensore", zone: "Via dell'Isola" },
+  { name: "Via Poncione",   sub: "3 stanze · 4° piano · ascensore", zone: "Via Poncione",   wipLabel: "Disponibili da settembre" },
+  { name: "Via dell'Isola", sub: "3 stanze · 2° piano · ascensore", zone: "Via dell'Isola", wipLabel: "Disponibili prossimamente" },
 ];
