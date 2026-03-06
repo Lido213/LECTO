@@ -95,13 +95,50 @@ function initMap() {
   // Via Poncione
   L.marker([45.8357, 9.4136], { icon: makePin('Via Poncione', false) })
     .addTo(_map)
-    .on('click', () => selectMapApt('poncione'));
+    .on('click', (e) => { L.DomEvent.stopPropagation(e); selectMapApt('poncione'); });
 
   // Via dell'Isola
   L.marker([45.8478, 9.3949], { icon: makePin("Via dell'Isola", true) })
     .addTo(_map)
-    .on('click', () => selectMapApt('isola'));
+    .on('click', (e) => { L.DomEvent.stopPropagation(e); selectMapApt('isola'); });
+
+  // Click sulla mappa → chiude il card
+  _map.on('click', closeMapCard);
 }
+
+function closeMapCard() {
+  const card = document.getElementById('mapCard');
+  card.style.transform = '';
+  card.classList.remove('visible');
+}
+
+// Swipe-to-dismiss sul bottom sheet della mappa
+(function initMapCardDrag() {
+  document.addEventListener('DOMContentLoaded', () => {
+    const card = document.getElementById('mapCard');
+    let startY = 0, dy = 0;
+
+    card.addEventListener('touchstart', e => {
+      startY = e.touches[0].clientY;
+      dy = 0;
+      card.style.transition = 'none';
+    }, { passive: true });
+
+    card.addEventListener('touchmove', e => {
+      dy = e.touches[0].clientY - startY;
+      if (dy > 0) card.style.transform = `translateY(${dy}px)`;
+    }, { passive: true });
+
+    card.addEventListener('touchend', () => {
+      card.style.transition = '';
+      if (dy > 80) {
+        closeMapCard();
+      } else {
+        card.style.transform = card.classList.contains('visible') ? 'translateY(0)' : 'translateY(110%)';
+      }
+    });
+  });
+})();
 
 function selectMapApt(aptKey) {
   const apt = mapApts[aptKey];
