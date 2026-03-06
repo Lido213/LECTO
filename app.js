@@ -22,7 +22,6 @@
 // 3. Clicca "Distribuisci > Nuova distribuzione" > tipo "App web"
 //    Esegui come: Me | Chi ha accesso: Chiunque → copia l'URL
 // 4. Incollalo qui sotto:
-const WAITLIST_ENDPOINT = '';
 
 
 // ── STATE ─────────────────────────────────────────────────
@@ -667,6 +666,72 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ── LISTA D'ATTESA ────────────────────────────────────────
+
+function buildWaitlistForm() {
+  const cfg = WAITLIST_CONFIG;
+  const req = '<span class="wl-req">*</span>';
+
+  // Raggruppa i campi half consecutivi in righe a 2 colonne
+  const rows = [];
+  let i = 0;
+  while (i < cfg.fields.length) {
+    const f = cfg.fields[i];
+    if (f.half && cfg.fields[i + 1]?.half) {
+      rows.push({ type: 'row2', fields: [f, cfg.fields[i + 1]] });
+      i += 2;
+    } else {
+      rows.push({ type: 'single', fields: [f] });
+      i++;
+    }
+  }
+
+  function renderField(f) {
+    const label = `<label class="wl-label" for="${f.id}">${f.label}${f.required ? ' ' + req : ''}</label>`;
+    let input;
+    if (f.type === 'select') {
+      const opts = f.options.map(o => `<option>${o}</option>`).join('');
+      input = `<select class="wl-input wl-select" id="${f.id}"><option value="">Seleziona…</option>${opts}</select>`;
+    } else if (f.type === 'textarea') {
+      input = `<textarea class="wl-input wl-textarea" id="${f.id}" placeholder="${f.placeholder || ''}" rows="${f.rows || 3}"></textarea>`;
+    } else {
+      const ac = f.autocomplete ? ` autocomplete="${f.autocomplete}"` : '';
+      input = `<input class="wl-input" id="${f.id}" type="${f.type}" placeholder="${f.placeholder || ''}"${ac}/>`;
+    }
+    return `<div class="wl-field">${label}${input}</div>`;
+  }
+
+  const bodyHtml = rows.map(r =>
+    r.type === 'row2'
+      ? `<div class="wl-row-2">${r.fields.map(renderField).join('')}</div>`
+      : renderField(r.fields[0])
+  ).join('');
+
+  document.getElementById('waitlistForm').innerHTML = `
+    <div class="contatti-header">
+      <div class="contatti-title">${cfg.title}</div>
+      <button class="contatti-close" onclick="closeWaitlist(null)">✕</button>
+    </div>
+    <div class="waitlist-intro">${cfg.intro}</div>
+    <div class="waitlist-body">
+      ${bodyHtml}
+      <div class="wl-error" id="wlError"></div>
+      <button class="detail-cta wl-submit" id="wlSubmitBtn" onclick="submitWaitlist()">
+        ${cfg.submitLabel}
+      </button>
+    </div>`;
+
+  document.getElementById('waitlistSuccess').innerHTML = `
+    <div class="contatti-header">
+      <div class="contatti-title">${cfg.title}</div>
+      <button class="contatti-close" onclick="closeWaitlist(null)">✕</button>
+    </div>
+    <div class="wl-success">
+      <div class="wl-success-icon">✓</div>
+      <div class="wl-success-title">${cfg.successTitle}</div>
+      <div class="wl-success-sub">${cfg.successSub}</div>
+    </div>`;
+}
+
 function openWaitlist() {
   document.getElementById('waitlistOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -676,59 +741,59 @@ function closeWaitlist(e) {
   if (e && e.target !== document.getElementById('waitlistOverlay')) return;
   document.getElementById('waitlistOverlay').classList.remove('open');
   document.body.style.overflow = '';
-  // reset form after close animation
+  // reset form dopo l'animazione di chiusura
   setTimeout(() => {
     document.getElementById('waitlistForm').style.display = '';
     document.getElementById('waitlistSuccess').style.display = 'none';
     document.getElementById('wlError').textContent = '';
     document.getElementById('wlSubmitBtn').disabled = false;
-    document.getElementById('wlSubmitBtn').textContent = "Iscriviti alla lista d'attesa";
-    ['wlNome','wlEmail','wlTel','wlCorso','wlDa','wlBudget','wlNote'].forEach(id => {
-      const el = document.getElementById(id);
+    document.getElementById('wlSubmitBtn').textContent = WAITLIST_CONFIG.submitLabel;
+    WAITLIST_CONFIG.fields.forEach(f => {
+      const el = document.getElementById(f.id);
       if (el) el.value = '';
     });
   }, 350);
 }
 
 async function submitWaitlist() {
-  const nome   = document.getElementById('wlNome').value.trim();
-  const email  = document.getElementById('wlEmail').value.trim();
-  const da     = document.getElementById('wlDa').value;
-  const budget = document.getElementById('wlBudget').value;
+  const cfg    = WAITLIST_CONFIG;
   const errEl  = document.getElementById('wlError');
 
-  if (!nome || !email || !da || !budget) {
+  // Valida campi obbligatori
+  const missing = cfg.fields.filter(f => f.required && !document.getElementById(f.id)?.value.trim());
+  if (missing.length) {
     errEl.textContent = 'Compila tutti i campi obbligatori (*)';
     return;
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    errEl.textContent = 'Inserisci un indirizzo email valido.';
-    return;
+  const emailField = cfg.fields.find(f => f.type === 'email');
+  if (emailField) {
+    const val = document.getElementById(emailField.id).value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+      errEl.textContent = 'Inserisci un indirizzo email valido.';
+      return;
+    }
   }
   errEl.textContent = '';
 
-  const payload = {
-    nome,
-    email,
-    telefono: document.getElementById('wlTel').value.trim(),
-    corso:    document.getElementById('wlCorso').value.trim(),
-    da,
-    budget,
-    note:     document.getElementById('wlNote').value.trim(),
-  };
+  // Costruisce payload dai campi del config
+  const payload = {};
+  cfg.fields.forEach(f => {
+    const el = document.getElementById(f.id);
+    if (el) payload[f.id] = el.value.trim();
+  });
 
   const btn = document.getElementById('wlSubmitBtn');
   btn.disabled = true;
   btn.textContent = 'Invio in corso…';
 
-  // Salva sempre in localStorage come backup
+  // Salva in localStorage come backup
   const lista = JSON.parse(localStorage.getItem('waitlist') || '[]');
   lista.push({ ...payload, ts: new Date().toISOString() });
   localStorage.setItem('waitlist', JSON.stringify(lista));
 
-  if (WAITLIST_ENDPOINT) {
+  if (cfg.endpoint) {
     try {
-      await fetch(WAITLIST_ENDPOINT, {
+      await fetch(cfg.endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -743,4 +808,5 @@ async function submitWaitlist() {
 }
 
 // ── INIT ──────────────────────────────────────────────────
+buildWaitlistForm();
 render();
