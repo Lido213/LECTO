@@ -107,8 +107,38 @@ function initMap() {
 }
 
 function closeMapCard() {
-  document.getElementById('mapCard').classList.remove('visible');
+  const card = document.getElementById('mapCard');
+  card.style.transform = '';
+  card.classList.remove('visible');
 }
+
+// Swipe-to-dismiss sul bottom sheet della mappa
+(function initMapCardDrag() {
+  document.addEventListener('DOMContentLoaded', () => {
+    const card = document.getElementById('mapCard');
+    let startY = 0, dy = 0;
+
+    card.addEventListener('touchstart', e => {
+      startY = e.touches[0].clientY;
+      dy = 0;
+      card.style.transition = 'none';
+    }, { passive: true });
+
+    card.addEventListener('touchmove', e => {
+      dy = e.touches[0].clientY - startY;
+      if (dy > 0) card.style.transform = `translateY(${dy}px)`;
+    }, { passive: true });
+
+    card.addEventListener('touchend', () => {
+      card.style.transition = '';
+      if (dy > 80) {
+        closeMapCard();
+      } else {
+        card.style.transform = card.classList.contains('visible') ? 'translateY(0)' : 'translateY(110%)';
+      }
+    });
+  });
+})();
 
 function selectMapApt(aptKey) {
   const apt = mapApts[aptKey];
