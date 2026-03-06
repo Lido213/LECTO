@@ -362,7 +362,7 @@ function renderRow(filtered) {
   if (!groups.length) return "";
   return groups.map(g => {
     const allWip = g.rooms.every(r => r.status === 'wip');
-    const wipBanner = allWip ? `<div class="wip-notice">📅 ${g.wipLabel || 'Disponibili prossimamente'}</div>` : '';
+    const wipBanner = allWip ? `<div class="wip-notice wip-notice-btn" onclick="openWaitlist()">📅 ${g.wipLabel || 'Disponibili prossimamente'} — Iscriviti alla lista d'attesa ›</div>` : '';
     return `
     <div class="apt-group">
       <div class="apt-group-header">
@@ -553,11 +553,11 @@ function openDetail(id) {
   lucide.createIcons();
   document.getElementById("dFeats").innerHTML   = r.tags.map(t=>`<span class="dfeat${r.gold.includes(t)?" tg":""}">${t}</span>`).join("");
   const wip = r.status==="wip";
-  document.getElementById("dCtaTxt").textContent = wip ? "Disponibile presto" : r.status==="coming" ? "Prenota in anteprima ↗" : "Contattaci ↗";
+  document.getElementById("dCtaTxt").textContent = wip ? "Iscriviti alla lista d'attesa ›" : r.status==="coming" ? "Prenota in anteprima ↗" : "Contattaci ↗";
   const cta = document.getElementById("dCta");
-  cta.style.background = wip ? "var(--border-dark)" : "";
-  cta.style.color = wip ? "var(--muted)" : "";
-  cta.style.cursor = wip ? "default" : "";
+  cta.style.background = "";
+  cta.style.color = "";
+  cta.style.cursor = "";
   document.getElementById("detailOverlay").classList.add("open");
   document.body.style.overflow = "hidden";
 }
@@ -568,7 +568,12 @@ function closeDetail(e) {
 }
 function handleCta() {
   const r = rooms.find(x => x.id===state.activeRoom);
-  if (!r || r.status==="wip") return;
+  if (!r) return;
+  if (r.status==="wip") {
+    closeDetail(null);
+    setTimeout(openWaitlist, 320);
+    return;
+  }
   window.open("https://www.instagram.com/lecto2025", "_blank");
   closeDetail(null);
 }
