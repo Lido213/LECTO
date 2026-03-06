@@ -163,10 +163,9 @@ function selectMapApt(aptKey) {
     const img = roomImages[r.id]
       ? `<img src="${roomImages[r.id]}" alt="${r.name}" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;border-radius:10px;display:block;"/>`
       : `<div style="font-size:1.4rem;line-height:60px;text-align:center;">${r.thumb}</div>`;
-    const wipBadge = r.status === 'wip' ? `<span style="position:absolute;top:6px;right:6px;background:#fff8e6;border:1px solid #e5b34c;color:#7a5500;font-size:.55rem;font-weight:700;padding:2px 7px;border-radius:999px;">Presto</span>` : '';
     const tags = r.tags.slice(0,2).map(t => `<span class="rtag${r.gold.includes(t)?' tg':''}">${t}</span>`).join('');
     return `<div class="mc-room-row" onclick="openDetail(${r.id})">
-      <div class="mc-room-thumb">${img}${wipBadge}</div>
+      <div class="mc-room-thumb">${img}</div>
       <div class="mc-room-info">
         <div class="mc-room-name">${r.name}</div>
         <div class="mc-room-price"><sup>€</sup>${r.price}<sub>/m</sub> <span style="font-size:.65rem;font-weight:400;color:var(--muted);">${r.inclusive?'tutto inc.':'+ utenze'}</span></div>
