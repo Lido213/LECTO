@@ -431,6 +431,8 @@ input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height:
 .nav-item.active { color: var(--navy); }
 .nav-item-icon { font-size: 1.2rem; line-height: 1; }
 .nav-item-label { font-size: .55rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+.nav-role-divider { width: 1.5px; background: var(--border-dark); margin: .15rem .4rem; border-radius: 2px; align-self: stretch; }
+.nav-role { flex: none; padding: .25rem .7rem; }
 
 .chisiamo-body { padding: .5rem 1.25rem 2rem; display: flex; flex-direction: column; gap: 1rem; }
 .chisiamo-row { display: flex; gap: .85rem; align-items: flex-start; }
