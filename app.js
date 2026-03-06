@@ -95,12 +95,19 @@ function initMap() {
   // Via Poncione
   L.marker([45.8357, 9.4136], { icon: makePin('Via Poncione', false) })
     .addTo(_map)
-    .on('click', () => selectMapApt('poncione'));
+    .on('click', (e) => { L.DomEvent.stopPropagation(e); selectMapApt('poncione'); });
 
   // Via dell'Isola
   L.marker([45.8478, 9.3949], { icon: makePin("Via dell'Isola", true) })
     .addTo(_map)
-    .on('click', () => selectMapApt('isola'));
+    .on('click', (e) => { L.DomEvent.stopPropagation(e); selectMapApt('isola'); });
+
+  // Click sulla mappa → chiude il card
+  _map.on('click', closeMapCard);
+}
+
+function closeMapCard() {
+  document.getElementById('mapCard').classList.remove('visible');
 }
 
 function selectMapApt(aptKey) {
