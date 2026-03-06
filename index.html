@@ -47,6 +47,11 @@
             <span class="menu-item-label">Contatti</span>
             <span class="menu-item-arrow">›</span>
           </a>
+          <a class="menu-item" href="javascript:void(0)" onclick="openWaitlist();toggleMenu(event);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+            <span class="menu-item-label">Lista d&#8217;attesa</span>
+            <span class="menu-item-arrow">›</span>
+          </a>
           <a class="menu-item" href="javascript:void(0)">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r=".8" fill="currentColor" stroke="none"/></svg>
             <span class="menu-item-label">FAQ</span>
@@ -304,6 +309,97 @@
   </div>
 </div>
 
+
+<!-- LISTA D'ATTESA SHEET -->
+<div class="contatti-overlay" id="waitlistOverlay" onclick="closeWaitlist(event)">
+  <div class="contatti-sheet waitlist-sheet" id="waitlistSheet">
+    <div class="contatti-handle"></div>
+
+    <!-- Stato normale: form -->
+    <div id="waitlistForm">
+      <div class="contatti-header">
+        <div class="contatti-title">Lista d'attesa</div>
+        <button class="contatti-close" onclick="closeWaitlist(null)">✕</button>
+      </div>
+      <div class="waitlist-intro">
+        Lasciaci i tuoi dati: ti contatteremo non appena si libera una stanza adatta a te.
+      </div>
+      <div class="waitlist-body">
+        <div class="wl-field">
+          <label class="wl-label" for="wlNome">Nome e cognome <span class="wl-req">*</span></label>
+          <input class="wl-input" id="wlNome" type="text" placeholder="Es. Mario Rossi" autocomplete="name"/>
+        </div>
+        <div class="wl-field">
+          <label class="wl-label" for="wlEmail">Email <span class="wl-req">*</span></label>
+          <input class="wl-input" id="wlEmail" type="email" placeholder="Es. mario@mail.com" autocomplete="email"/>
+        </div>
+        <div class="wl-field">
+          <label class="wl-label" for="wlTel">Telefono</label>
+          <input class="wl-input" id="wlTel" type="tel" placeholder="Es. +39 333 1234567" autocomplete="tel"/>
+        </div>
+        <div class="wl-field">
+          <label class="wl-label" for="wlCorso">Corso di laurea / Facoltà</label>
+          <input class="wl-input" id="wlCorso" type="text" placeholder="Es. Ingegneria Civile"/>
+        </div>
+        <div class="wl-row-2">
+          <div class="wl-field">
+            <label class="wl-label" for="wlDa">Disponibilità da <span class="wl-req">*</span></label>
+            <select class="wl-input wl-select" id="wlDa">
+              <option value="">Seleziona…</option>
+              <option>Settembre 2025</option>
+              <option>Ottobre 2025</option>
+              <option>Novembre 2025</option>
+              <option>Dicembre 2025</option>
+              <option>Gennaio 2026</option>
+              <option>Febbraio 2026</option>
+              <option>Marzo 2026</option>
+              <option>Aprile 2026</option>
+              <option>Maggio 2026</option>
+              <option>Giugno 2026</option>
+              <option>Luglio 2026</option>
+              <option>Agosto 2026</option>
+              <option>Settembre 2026</option>
+              <option>Ottobre 2026</option>
+              <option>Non so ancora</option>
+            </select>
+          </div>
+          <div class="wl-field">
+            <label class="wl-label" for="wlBudget">Budget mensile <span class="wl-req">*</span></label>
+            <select class="wl-input wl-select" id="wlBudget">
+              <option value="">Seleziona…</option>
+              <option>Fino a 400 €</option>
+              <option>400–500 €</option>
+              <option>500–600 €</option>
+              <option>Oltre 600 €</option>
+            </select>
+          </div>
+        </div>
+        <div class="wl-field">
+          <label class="wl-label" for="wlNote">Note o preferenze</label>
+          <textarea class="wl-input wl-textarea" id="wlNote" placeholder="Es. camera singola, arredata, WiFi incluso…" rows="3"></textarea>
+        </div>
+        <div class="wl-error" id="wlError"></div>
+        <button class="detail-cta wl-submit" id="wlSubmitBtn" onclick="submitWaitlist()">
+          Iscriviti alla lista d'attesa
+        </button>
+      </div>
+    </div>
+
+    <!-- Stato successo -->
+    <div id="waitlistSuccess" style="display:none;">
+      <div class="contatti-header">
+        <div class="contatti-title">Lista d'attesa</div>
+        <button class="contatti-close" onclick="closeWaitlist(null)">✕</button>
+      </div>
+      <div class="wl-success">
+        <div class="wl-success-icon">✓</div>
+        <div class="wl-success-title">Iscrizione confermata!</div>
+        <div class="wl-success-sub">Ti contatteremo appena si libera una stanza adatta a te.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script src="data.js"></script>
