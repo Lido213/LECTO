@@ -4,8 +4,23 @@
 
 const WAITLIST_CONFIG = {
 
-  // Endpoint POST che riceve i dati (lascia '' per solo localStorage)
-  endpoint: '',
+  // ── ENDPOINT ─────────────────────────────────────────────────────────────────
+  // Lascia '' per salvare solo in localStorage (nessun backend).
+  //
+  // ▶ GOOGLE SHEETS (consigliato — gratuito, illimitato):
+  //   1. Apri il tuo Google Foglio
+  //   2. Estensioni → Apps Script → incolla il codice da README o dalla guida
+  //   3. Distribuisci → Nuova distribuzione → App Web
+  //      (Esegui come: Tu · Accesso: Chiunque)
+  //   4. Copia l'URL e incollalo qui sotto
+  //   Nota: la chiamata usa mode:'no-cors', quindi non ricevi risposta —
+  //         i dati arrivano comunque nel foglio.
+  //
+  // ▶ AIRTABLE (interfaccia comoda, gratuito fino a 1.000 righe):
+  //   endpoint: 'https://api.airtable.com/v0/<BASE_ID>/<NOME_TABELLA>'
+  //   + aggiungi in app.js il header: Authorization: 'Bearer <TOKEN>'
+  // ─────────────────────────────────────────────────────────────────────────────
+  endpoint: 'https://script.google.com/macros/s/AKfycbweQaOrLHPVATt_BZVY7ZtNQfPfg0UNOGDexqkS8dHcXk9a_lrEk7uBPkkJCt5D2B6Vqg/exec',
 
   // Testi UI
   title:        "Lista d'attesa",
