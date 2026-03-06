@@ -171,6 +171,6 @@ const rooms = [
 // "sub" è il sottotitolo mostrato nell'intestazione del gruppo.
 
 const apartments = [
-  { name: "Via Poncione",   sub: "3 stanze · 4° piano · ascensore", zone: "Via Poncione",   wipLabel: "disponibili da settembre" },
-  { name: "Via dell'Isola", sub: "3 stanze · 2° piano · ascensore", zone: "Via dell'Isola" },
+  { name: "Via Poncione",   sub: "3 stanze · 4° piano · ascensore", zone: "Via Poncione",   wipLabel: "Disponibili da settembre" },
+  { name: "Via dell'Isola", sub: "3 stanze · 2° piano · ascensore", zone: "Via dell'Isola", wipLabel: "Disponibili prossimamente" },
 ];
