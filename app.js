@@ -471,10 +471,10 @@ function focusFilters() {
 
 // ── SERVICES ICONS ────────────────────────────────────────
 const serviceIcons = {
-  "Lavastoviglie":        "dishwasher",
+  "Lavastoviglie":        "droplets",
   "Lavatrice":            "washing-machine",
-  "Forno":                "oven",
-  "Forno a Microonde":    "microwave",
+  "Forno":                "flame",
+  "Forno a Microonde":    "cooking-pot",
   "Frigorifero e Freezer":"refrigerator",
   "WiFi":                 "wifi",
   "Ascensore":            "arrow-up-down",
