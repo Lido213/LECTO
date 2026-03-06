@@ -471,20 +471,21 @@ function focusFilters() {
 
 // ── SERVICES ICONS ────────────────────────────────────────
 const serviceIcons = {
-  "Lavastoviglie": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2" width="18" height="20" rx="2"/><line x1="3" y1="7" x2="21" y2="7"/><circle cx="12" cy="14" r="3.5"/><circle cx="12" cy="14" r="1.2"/><line x1="6" y1="4.5" x2="7.5" y2="4.5"/><line x1="9" y1="4.5" x2="10.5" y2="4.5"/></svg>`,
-  "Lavatrice": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2" width="18" height="20" rx="2"/><line x1="3" y1="7" x2="21" y2="7"/><circle cx="12" cy="14" r="4"/><circle cx="12" cy="14" r="1.5"/><circle cx="7" cy="4.5" r=".8" fill="currentColor" stroke="none"/><circle cx="9.5" cy="4.5" r=".8" fill="currentColor" stroke="none"/></svg>`,
-  "Forno": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><rect x="5" y="9" width="14" height="8" rx="1"/><line x1="7" y1="6.5" x2="7" y2="6.5"/><circle cx="7" cy="6.5" r=".8" fill="currentColor" stroke="none"/><circle cx="10" cy="6.5" r=".8" fill="currentColor" stroke="none"/><circle cx="13" cy="6.5" r=".8" fill="currentColor" stroke="none"/><path d="M8 14 Q10 11 12 14 Q14 17 16 14"/></svg>`,
-  "Forno a Microonde": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><rect x="4" y="7.5" width="12" height="9" rx="1"/><line x1="18" y1="9" x2="20" y2="9"/><line x1="18" y1="12" x2="20" y2="12"/><line x1="18" y1="15" x2="20" y2="15"/></svg>`,
-  "Frigorifero e Freezer": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="9" y1="5.5" x2="9" y2="7.5"/><line x1="9" y1="12" x2="9" y2="16"/></svg>`,
-  "WiFi": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 8.5C5.5 4.5 10.5 2.5 12 2.5s6.5 2 10.5 6"/><path d="M5 12c1.9-1.9 4.3-3 7-3s5.1 1.1 7 3"/><path d="M8.5 15.5c1-1 2.2-1.5 3.5-1.5s2.5.5 3.5 1.5"/><circle cx="12" cy="19" r="1.2" fill="currentColor" stroke="none"/></svg>`,
-  "Ascensore": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="2" x2="12" y2="22"/><polyline points="8.5 6 12 2.5 15.5 6"/><polyline points="8.5 18 12 21.5 15.5 18"/></svg>`,
-  "Smart-TV": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M17 8c.5.8.5 2 0 3" /><path d="M19 6c1.2 1.5 1.2 4.5 0 6"/></svg>`,
-  "Utenze (Luce e Gas)": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 7C9.5 9.5 12 10 12 12.5"/><circle cx="12" cy="16" r="1" fill="currentColor" stroke="none"/><path d="M15 5.5C16.5 7 17 8.5 17 10c0 2.5-1.5 4-2.5 5"/><path d="M7 6C5.5 7.5 5 9 5 10.5c0 2.5 1.5 4 2.5 5"/></svg>`,
-  "Pulizie": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a1 1 0 011 1v8h3l-4 9-4-9h3V4a1 1 0 011-1z"/><path d="M8 7H5a1 1 0 00-1 1v3"/><path d="M16 7h3a1 1 0 011 1v3"/></svg>`,
+  "Lavastoviglie":        "dishwasher",
+  "Lavatrice":            "washing-machine",
+  "Forno":                "oven",
+  "Forno a Microonde":    "microwave",
+  "Frigorifero e Freezer":"refrigerator",
+  "WiFi":                 "wifi",
+  "Ascensore":            "arrow-up-down",
+  "Smart-TV":             "tv",
+  "Utenze (Luce e Gas)":  "zap",
+  "Pulizie":              "sparkles",
 };
 
 function getServiceIcon(name) {
-  return serviceIcons[name] || `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r=".8" fill="currentColor" stroke="none"/></svg>`;
+  const icon = serviceIcons[name] || "circle-help";
+  return `<i data-lucide="${icon}"></i>`;
 }
 
 function renderServices(r) {
@@ -527,6 +528,7 @@ function openDetail(id) {
   document.getElementById("dNote").textContent  = r.inclusive ? "tutto incluso — nessuna spesa extra" : "utenze escluse (condivise)";
   document.getElementById("dDesc").textContent  = r.desc;
   document.getElementById("dServices").innerHTML = renderServices(r);
+  lucide.createIcons();
   document.getElementById("dFeats").innerHTML   = r.tags.map(t=>`<span class="dfeat${r.gold.includes(t)?" tg":""}">${t}</span>`).join("");
   const wip = r.status==="wip";
   document.getElementById("dCtaTxt").textContent = wip ? "Disponibile presto" : r.status==="coming" ? "Prenota in anteprima ↗" : "Contattaci ↗";
