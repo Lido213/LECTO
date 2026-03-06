@@ -303,7 +303,7 @@ function renderRow(filtered) {
   if (!groups.length) return "";
   return groups.map(g => {
     const allWip = g.rooms.every(r => r.status === 'wip');
-    const wipBanner = allWip ? `<div class="wip-notice">🏗️ Stanze in ristrutturazione &mdash; disponibili prossimamente</div>` : '';
+    const wipBanner = allWip ? `<div class="wip-notice">🏗️ Stanze in ristrutturazione &mdash; ${g.wipLabel || 'disponibili prossimamente'}</div>` : '';
     return `
     <div class="apt-group">
       <div class="apt-group-header">
