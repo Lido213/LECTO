@@ -1,6 +1,29 @@
 // ── DATI ─────────────────────────────────────────────────
 // Tutti i dati (stanze, foto, appartamenti) sono in data.js
 
+// ── CONFIG LISTA D'ATTESA ─────────────────────────────────
+// Incolla qui l'URL del tuo Google Apps Script (vedi README o istruzioni sotto).
+// Lascia vuoto per salvare solo in localStorage durante lo sviluppo.
+//
+// COME CONFIGURARE GOOGLE SHEETS:
+// 1. Crea un nuovo Google Sheet con le colonne:
+//    Data | Nome | Email | Telefono | Corso | Da quando | Budget | Note
+// 2. Nel menu Estensioni > Apps Script, incolla questo codice:
+//
+//    function doPost(e) {
+//      var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+//      var d = JSON.parse(e.postData.contents);
+//      sheet.appendRow([new Date(), d.nome, d.email, d.telefono||'',
+//        d.corso||'', d.da||'', d.budget||'', d.note||'']);
+//      return ContentService.createTextOutput(JSON.stringify({ok:true}))
+//        .setMimeType(ContentService.MimeType.JSON);
+//    }
+//
+// 3. Clicca "Distribuisci > Nuova distribuzione" > tipo "App web"
+//    Esegui come: Me | Chi ha accesso: Chiunque → copia l'URL
+// 4. Incollalo qui sotto:
+const WAITLIST_ENDPOINT = '';
+
 
 // ── STATE ─────────────────────────────────────────────────
 const state = { zone:"all", maxPrice:650, sortAsc:true, sortActive:false, activeRoom:null };
@@ -637,6 +660,82 @@ document.addEventListener('DOMContentLoaded', () => {
     el.addEventListener('touchmove', forwardTouchMove, { passive: false });
   });
 });
+
+// ── LISTA D'ATTESA ────────────────────────────────────────
+function openWaitlist() {
+  document.getElementById('waitlistOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeWaitlist(e) {
+  if (e && e.target !== document.getElementById('waitlistOverlay')) return;
+  document.getElementById('waitlistOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  // reset form after close animation
+  setTimeout(() => {
+    document.getElementById('waitlistForm').style.display = '';
+    document.getElementById('waitlistSuccess').style.display = 'none';
+    document.getElementById('wlError').textContent = '';
+    document.getElementById('wlSubmitBtn').disabled = false;
+    document.getElementById('wlSubmitBtn').textContent = "Iscriviti alla lista d'attesa";
+    ['wlNome','wlEmail','wlTel','wlCorso','wlDa','wlBudget','wlNote'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+  }, 350);
+}
+
+async function submitWaitlist() {
+  const nome   = document.getElementById('wlNome').value.trim();
+  const email  = document.getElementById('wlEmail').value.trim();
+  const da     = document.getElementById('wlDa').value;
+  const budget = document.getElementById('wlBudget').value;
+  const errEl  = document.getElementById('wlError');
+
+  if (!nome || !email || !da || !budget) {
+    errEl.textContent = 'Compila tutti i campi obbligatori (*)';
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errEl.textContent = 'Inserisci un indirizzo email valido.';
+    return;
+  }
+  errEl.textContent = '';
+
+  const payload = {
+    nome,
+    email,
+    telefono: document.getElementById('wlTel').value.trim(),
+    corso:    document.getElementById('wlCorso').value.trim(),
+    da,
+    budget,
+    note:     document.getElementById('wlNote').value.trim(),
+  };
+
+  const btn = document.getElementById('wlSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Invio in corso…';
+
+  // Salva sempre in localStorage come backup
+  const lista = JSON.parse(localStorage.getItem('waitlist') || '[]');
+  lista.push({ ...payload, ts: new Date().toISOString() });
+  localStorage.setItem('waitlist', JSON.stringify(lista));
+
+  if (WAITLIST_ENDPOINT) {
+    try {
+      await fetch(WAITLIST_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    } catch (_) {
+      // errore di rete: i dati sono già in localStorage
+    }
+  }
+
+  document.getElementById('waitlistForm').style.display = 'none';
+  document.getElementById('waitlistSuccess').style.display = '';
+}
 
 // ── INIT ──────────────────────────────────────────────────
 render();

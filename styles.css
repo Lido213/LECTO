@@ -526,4 +526,43 @@ input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height:
 .extra-item .service-icon { color: var(--muted); }
 .extra-item .service-label { color: var(--text-sm); }
 
+/* ── LISTA D'ATTESA ── */
+.waitlist-sheet { max-height: 92vh; overflow-y: auto; }
+.waitlist-intro {
+  font-size: .82rem; color: var(--text-sm); line-height: 1.5;
+  padding: .1rem 1.25rem .75rem;
+}
+.waitlist-body { padding: 0 1.25rem 2rem; display: flex; flex-direction: column; gap: .85rem; }
+.wl-field { display: flex; flex-direction: column; gap: .35rem; }
+.wl-label { font-size: .72rem; font-weight: 700; color: var(--navy); letter-spacing: .03em; text-transform: uppercase; }
+.wl-req { color: var(--gold); }
+.wl-input {
+  width: 100%; border: 1.5px solid var(--border-dark); border-radius: 12px;
+  padding: .7rem .9rem; font-family: var(--font-body); font-size: .9rem;
+  color: var(--navy); background: var(--bg); outline: none;
+  transition: border-color .18s;
+  -webkit-appearance: none; appearance: none;
+}
+.wl-input:focus { border-color: var(--navy); }
+.wl-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23143654' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right .9rem center; padding-right: 2.2rem; cursor: pointer; }
+.wl-textarea { resize: none; line-height: 1.5; }
+.wl-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+.wl-error { font-size: .78rem; color: #c0392b; font-weight: 600; min-height: 1rem; }
+.wl-submit { margin-top: .25rem; width: 100%; }
+.wl-submit:disabled { background: var(--border-dark); color: var(--muted); cursor: default; }
+
+/* Stato successo */
+.wl-success {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 2rem 1.5rem 3rem; gap: .75rem; text-align: center;
+}
+.wl-success-icon {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--green-bg); color: var(--green);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; font-weight: 700;
+}
+.wl-success-title { font-size: 1.15rem; font-weight: 700; color: var(--navy); }
+.wl-success-sub { font-size: .85rem; color: var(--text-sm); line-height: 1.5; }
+
 
