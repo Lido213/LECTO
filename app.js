@@ -793,13 +793,16 @@ async function submitWaitlist() {
 
   if (cfg.endpoint) {
     try {
+      // Google Apps Script richiede mode:'no-cors' (non si può leggere la risposta,
+      // ma il dato arriva ugualmente nel foglio). I dati sono già in localStorage.
       await fetch(cfg.endpoint, {
         method: 'POST',
+        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
     } catch (_) {
-      // errore di rete: i dati sono già in localStorage
+      // errore di rete: i dati sono già salvati in localStorage
     }
   }
 
