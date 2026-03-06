@@ -10,11 +10,24 @@
 //    Data | Nome | Email | Telefono | Corso | Da quando | Budget | Note
 // 2. Nel menu Estensioni > Apps Script, incolla questo codice:
 //
+//    var EMAILS = ['carlo.giudici213@gmail.com', 'lecto.student@gmail.com'];
+//
 //    function doPost(e) {
 //      var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 //      var d = JSON.parse(e.postData.contents);
 //      sheet.appendRow([new Date(), d.nome, d.email, d.telefono||'',
 //        d.corso||'', d.da||'', d.budget||'', d.note||'']);
+//
+//      var righe = Object.entries(d).map(function(kv) {
+//        return '• ' + kv[0] + ': ' + (kv[1] || '—');
+//      }).join('\n');
+//      MailApp.sendEmail({
+//        to: EMAILS.join(','),
+//        subject: 'LECTO — Nuova iscrizione lista d\'attesa',
+//        body: 'Nuova iscrizione ricevuta:\n\n' + righe +
+//              '\n\nTimestamp: ' + new Date().toLocaleString('it-IT'),
+//      });
+//
 //      return ContentService.createTextOutput(JSON.stringify({ok:true}))
 //        .setMimeType(ContentService.MimeType.JSON);
 //    }
