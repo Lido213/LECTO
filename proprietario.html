@@ -71,6 +71,63 @@
   }
   .prop-nav-item.active { color: var(--navy); }
   .prop-nav-item-label { font-size: .55rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+
+  /* ── FORM PROPRIETARIO ───────────────────────────────────── */
+  .prop-form-btn { border: none; cursor: pointer; }
+
+  .pf-overlay { position: fixed; inset: 0; z-index: 3000; background: rgba(13,36,56,.65); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity .3s; }
+  .pf-overlay.open { opacity: 1; pointer-events: all; }
+  .pf-sheet { position: absolute; bottom: 0; left: 0; right: 0; background: var(--bg); border-radius: 22px 22px 0 0; padding: 1rem 1.25rem max(calc(1.5rem + env(safe-area-inset-bottom, 0px)), 1.5rem); max-height: 92vh; overflow-y: auto; transform: translateY(100%); transition: transform .35s cubic-bezier(.32,1,.32,1); }
+  .pf-overlay.open .pf-sheet { transform: none; }
+  .pf-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--border-dark); margin: 0 auto .9rem; }
+
+  .pf-step-bar { display: flex; gap: 4px; margin-bottom: 1rem; }
+  .pf-step-dot { flex: 1; height: 3px; border-radius: 2px; background: var(--border-dark); transition: background .3s; }
+  .pf-step-dot.done { background: var(--navy); }
+  .pf-step-dot.active { background: #c99a2e; }
+
+  .pf-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: var(--navy); margin-bottom: .2rem; }
+  .pf-sub { font-size: .8rem; color: var(--muted); margin-bottom: 1.1rem; line-height: 1.5; }
+
+  .pf-step { display: none; }
+  .pf-step.active { display: block; }
+
+  .pf-option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem; margin-bottom: 1.1rem; }
+  .pf-option { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .3rem; padding: .85rem .4rem; border-radius: 14px; border: 1.5px solid var(--border); background: var(--surface); cursor: pointer; transition: border-color .2s, background .2s; text-align: center; user-select: none; -webkit-tap-highlight-color: transparent; }
+  .pf-option.sel { border-color: var(--navy); background: rgba(20,54,84,.07); }
+  .pf-option-icon { font-size: 1.4rem; line-height: 1; }
+  .pf-option-label { font-size: .8rem; font-weight: 700; color: var(--navy); }
+
+  .pf-label { font-size: .67rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; display: block; }
+  .pf-input { width: 100%; box-sizing: border-box; border: 1.5px solid var(--border-dark); border-radius: 12px; padding: .72rem .9rem; font-size: .9rem; font-family: inherit; color: var(--navy); background: var(--surface); margin-bottom: .75rem; -webkit-appearance: none; appearance: none; }
+  .pf-input:focus { outline: none; border-color: var(--navy); }
+  select.pf-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right .75rem center; padding-right: 2rem; }
+  .pf-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem; }
+
+  .pf-toggle-row { display: flex; align-items: center; justify-content: space-between; padding: .72rem .9rem; border-radius: 12px; background: var(--surface); border: 1.5px solid var(--border); margin-bottom: .75rem; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .pf-toggle-lbl { font-size: .88rem; font-weight: 600; color: var(--navy); }
+  .pf-toggle { width: 44px; height: 26px; border-radius: 13px; background: var(--border-dark); position: relative; transition: background .2s; flex-shrink: 0; pointer-events: none; }
+  .pf-toggle.on { background: var(--navy); }
+  .pf-toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .2s; box-shadow: 0 1px 4px rgba(0,0,0,.2); }
+  .pf-toggle.on::after { transform: translateX(18px); }
+
+  .pf-service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; margin-bottom: 1rem; }
+  .pf-service { display: flex; align-items: center; gap: .5rem; padding: .62rem .7rem; border-radius: 11px; border: 1.5px solid var(--border); background: var(--surface); cursor: pointer; transition: border-color .2s, background .2s; user-select: none; -webkit-tap-highlight-color: transparent; }
+  .pf-service.sel { border-color: var(--navy); background: rgba(20,54,84,.07); }
+  .pf-service-box { width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid var(--border-dark); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .2s, border-color .2s; }
+  .pf-service.sel .pf-service-box { background: var(--navy); border-color: var(--navy); }
+  .pf-service-name { font-size: .8rem; font-weight: 600; color: var(--navy); }
+
+  .pf-btn-row { display: flex; gap: .5rem; margin-top: .6rem; }
+  .pf-btn-back { flex: 0 0 auto; background: none; border: 1.5px solid var(--border-dark); color: var(--muted); border-radius: 12px; padding: .78rem 1rem; font-size: .88rem; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .pf-btn-next { flex: 1; background: var(--navy); color: #fff; border: none; border-radius: 12px; padding: .82rem; font-size: .95rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: opacity .2s; }
+  .pf-btn-next:active { opacity: .8; }
+
+  .pf-success { text-align: center; padding: 2.5rem 1rem 1rem; }
+  .pf-success-icon { font-size: 2.8rem; margin-bottom: .8rem; }
+  .pf-success-title { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-weight: 900; color: var(--navy); margin-bottom: .5rem; }
+  .pf-success-sub { font-size: .88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.5rem; }
+  .pf-btn-close { background: var(--navy); color: #fff; border: none; border-radius: 12px; padding: .82rem 2rem; font-size: .95rem; font-weight: 700; cursor: pointer; font-family: inherit; }
 </style>
 </head>
 <body>
@@ -87,6 +144,10 @@
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
       Seguici su Instagram
     </a>
+    <button class="prop-ig prop-form-btn" onclick="openPropForm()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Pubblica la tua stanza
+    </button>
   </main>
 
   <nav class="prop-bottom-nav">
@@ -102,5 +163,336 @@
       <span class="prop-nav-item-label">Proprietario</span>
     </button>
   </nav>
+
+<!-- ── FORM PROPRIETARIO OVERLAY ─────────────────────────── -->
+<div class="pf-overlay" id="pfOverlay" onclick="pfOutsideClick(event)">
+  <div class="pf-sheet" id="pfSheet">
+    <div class="pf-handle"></div>
+
+    <!-- Step bar -->
+    <div class="pf-step-bar" id="pfStepBar">
+      <div class="pf-step-dot active" id="pfd0"></div>
+      <div class="pf-step-dot" id="pfd1"></div>
+      <div class="pf-step-dot" id="pfd2"></div>
+      <div class="pf-step-dot" id="pfd3"></div>
+      <div class="pf-step-dot" id="pfd4"></div>
+    </div>
+
+    <!-- Step 1: Tipo di alloggio -->
+    <div class="pf-step active" id="pfStep0">
+      <div class="pf-title">Che cosa vuoi affittare?</div>
+      <div class="pf-sub">Seleziona il tipo di alloggio che vuoi pubblicare.</div>
+      <div class="pf-option-grid">
+        <div class="pf-option" id="pfTipo-singola" onclick="pfSelectTipo('singola')">
+          <div class="pf-option-icon">🛏</div>
+          <div class="pf-option-label">Stanza singola</div>
+        </div>
+        <div class="pf-option" id="pfTipo-doppia" onclick="pfSelectTipo('doppia')">
+          <div class="pf-option-icon">🛏🛏</div>
+          <div class="pf-option-label">Stanza doppia</div>
+        </div>
+        <div class="pf-option" id="pfTipo-posto" onclick="pfSelectTipo('posto')">
+          <div class="pf-option-icon">🛋</div>
+          <div class="pf-option-label">Posto letto</div>
+        </div>
+        <div class="pf-option" id="pfTipo-app" onclick="pfSelectTipo('app')">
+          <div class="pf-option-icon">🏠</div>
+          <div class="pf-option-label">Appartamento intero</div>
+        </div>
+      </div>
+      <div class="pf-btn-row">
+        <button class="pf-btn-next" onclick="pfNext(0)">Avanti</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Posizione -->
+    <div class="pf-step" id="pfStep1">
+      <div class="pf-title">Dove si trova?</div>
+      <div class="pf-sub">Inserisci l'indirizzo e la zona dell'alloggio.</div>
+
+      <label class="pf-label" for="pfVia">Via / Indirizzo</label>
+      <input class="pf-input" id="pfVia" type="text" placeholder="Es. Via Poncione 14" autocomplete="street-address"/>
+
+      <div class="pf-row2">
+        <div>
+          <label class="pf-label" for="pfZona">Zona</label>
+          <select class="pf-input" id="pfZona">
+            <option value="">Seleziona…</option>
+            <option>Via Poncione</option>
+            <option>Via Isola</option>
+            <option>Centro storico</option>
+            <option>Altra zona</option>
+          </select>
+        </div>
+        <div>
+          <label class="pf-label" for="pfPiano">Piano</label>
+          <select class="pf-input" id="pfPiano">
+            <option value="">Seleziona…</option>
+            <option>Piano terra</option>
+            <option>1° piano</option>
+            <option>2° piano</option>
+            <option>3° piano</option>
+            <option>4° piano o superiore</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pf-btn-row">
+        <button class="pf-btn-back" onclick="pfBack(1)">Indietro</button>
+        <button class="pf-btn-next" onclick="pfNext(1)">Avanti</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Prezzo & dettagli -->
+    <div class="pf-step" id="pfStep2">
+      <div class="pf-title">Prezzo e dettagli</div>
+      <div class="pf-sub">Indicaci il canone e le caratteristiche principali.</div>
+
+      <div class="pf-row2">
+        <div>
+          <label class="pf-label" for="pfPrezzo">Prezzo €/mese</label>
+          <input class="pf-input" id="pfPrezzo" type="number" min="100" max="5000" placeholder="Es. 450" inputmode="numeric"/>
+        </div>
+        <div>
+          <label class="pf-label" for="pfMq">Superficie (m²)</label>
+          <input class="pf-input" id="pfMq" type="number" min="5" max="500" placeholder="Es. 18" inputmode="numeric"/>
+        </div>
+      </div>
+
+      <div class="pf-toggle-row" onclick="pfToggleIncluso()">
+        <span class="pf-toggle-lbl">Tutto incluso (utenze, WiFi…)</span>
+        <div class="pf-toggle" id="pfToggleIncluso"></div>
+      </div>
+
+      <label class="pf-label" for="pfDa">Disponibile da</label>
+      <select class="pf-input" id="pfDa">
+        <option value="">Seleziona…</option>
+        <option>Subito</option>
+        <option>Aprile 2026</option>
+        <option>Maggio 2026</option>
+        <option>Giugno 2026</option>
+        <option>Luglio 2026</option>
+        <option>Agosto 2026</option>
+        <option>Settembre 2026</option>
+        <option>Ottobre 2026</option>
+        <option>Non ancora definito</option>
+      </select>
+
+      <div class="pf-btn-row">
+        <button class="pf-btn-back" onclick="pfBack(2)">Indietro</button>
+        <button class="pf-btn-next" onclick="pfNext(2)">Avanti</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Servizi -->
+    <div class="pf-step" id="pfStep3">
+      <div class="pf-title">Cosa è incluso?</div>
+      <div class="pf-sub">Seleziona tutti i servizi disponibili nell'alloggio.</div>
+      <div class="pf-service-grid" id="pfServiceGrid">
+        <!-- Populated by JS -->
+      </div>
+      <div class="pf-btn-row">
+        <button class="pf-btn-back" onclick="pfBack(3)">Indietro</button>
+        <button class="pf-btn-next" onclick="pfNext(3)">Avanti</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Contatti -->
+    <div class="pf-step" id="pfStep4">
+      <div class="pf-title">I tuoi contatti</div>
+      <div class="pf-sub">Come possiamo metterci in contatto con te?</div>
+
+      <label class="pf-label" for="pfNome">Nome e cognome *</label>
+      <input class="pf-input" id="pfNome" type="text" placeholder="Es. Marco Bianchi" autocomplete="name"/>
+
+      <div class="pf-row2">
+        <div>
+          <label class="pf-label" for="pfTel">Telefono *</label>
+          <input class="pf-input" id="pfTel" type="tel" placeholder="+39 333 1234567" autocomplete="tel"/>
+        </div>
+        <div>
+          <label class="pf-label" for="pfEmail">Email</label>
+          <input class="pf-input" id="pfEmail" type="email" placeholder="tu@mail.com" autocomplete="email"/>
+        </div>
+      </div>
+
+      <label class="pf-label" for="pfNote">Note aggiuntive</label>
+      <textarea class="pf-input" id="pfNote" rows="3" placeholder="Es. arredata, balcone, vicina al Politecnico…" style="resize:none;"></textarea>
+
+      <div class="pf-btn-row">
+        <button class="pf-btn-back" onclick="pfBack(4)">Indietro</button>
+        <button class="pf-btn-next" onclick="pfSubmit()">Invia richiesta</button>
+      </div>
+    </div>
+
+    <!-- Successo -->
+    <div class="pf-step" id="pfStepSuccess">
+      <div class="pf-success">
+        <div class="pf-success-icon">✅</div>
+        <div class="pf-success-title">Richiesta inviata!</div>
+        <div class="pf-success-sub">Abbiamo ricevuto le informazioni sul tuo alloggio. Ti contatteremo a breve per discutere i dettagli della pubblicazione.</div>
+        <button class="pf-btn-close" onclick="closePropForm()">Chiudi</button>
+      </div>
+    </div>
+
+  </div><!-- /pf-sheet -->
+</div><!-- /pf-overlay -->
+
+<script>
+// ── PROP FORM STATE ────────────────────────────────────────
+const pfData = {
+  tipo: null,
+  incluso: false,
+  servizi: new Set(),
+};
+const TOTAL_STEPS = 5;
+
+const PF_SERVICES = [
+  { id: 'WiFi', label: 'WiFi' },
+  { id: 'Lavatrice', label: 'Lavatrice' },
+  { id: 'Lavastoviglie', label: 'Lavastoviglie' },
+  { id: 'Riscaldamento', label: 'Riscaldamento' },
+  { id: 'Aria condizionata', label: 'Aria cond.' },
+  { id: 'Parcheggio', label: 'Parcheggio' },
+  { id: 'Ascensore', label: 'Ascensore' },
+  { id: 'Balcone', label: 'Balcone' },
+  { id: 'Arredato', label: 'Arredato' },
+  { id: 'Cantina', label: 'Cantina' },
+];
+
+// ── INIT SERVICES ──────────────────────────────────────────
+(function initServices() {
+  const grid = document.getElementById('pfServiceGrid');
+  grid.innerHTML = PF_SERVICES.map(s => `
+    <div class="pf-service" id="pfSrv-${s.id}" onclick="pfToggleService('${s.id}')">
+      <div class="pf-service-box">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <span class="pf-service-name">${s.label}</span>
+    </div>
+  `).join('');
+})();
+
+// ── OPEN / CLOSE ───────────────────────────────────────────
+function openPropForm() {
+  document.getElementById('pfOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  pfGoTo(0);
+}
+function closePropForm() {
+  document.getElementById('pfOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function pfOutsideClick(e) {
+  if (e.target === document.getElementById('pfOverlay')) closePropForm();
+}
+
+// ── STEP NAVIGATION ────────────────────────────────────────
+function pfGoTo(step) {
+  // Hide all steps
+  document.querySelectorAll('.pf-step').forEach(el => el.classList.remove('active'));
+  // Show target
+  const target = step === 'success' ? document.getElementById('pfStepSuccess') : document.getElementById('pfStep' + step);
+  if (target) target.classList.add('active');
+  // Update step bar
+  for (let i = 0; i < TOTAL_STEPS; i++) {
+    const dot = document.getElementById('pfd' + i);
+    if (!dot) continue;
+    dot.className = 'pf-step-dot' + (i < step ? ' done' : i === step ? ' active' : '');
+  }
+  // Scroll sheet to top
+  document.getElementById('pfSheet').scrollTop = 0;
+}
+
+function pfNext(currentStep) {
+  // Validate
+  if (currentStep === 0 && !pfData.tipo) { alert('Seleziona il tipo di alloggio.'); return; }
+  if (currentStep === 1) {
+    if (!document.getElementById('pfVia').value.trim()) { alert('Inserisci l\'indirizzo.'); return; }
+    if (!document.getElementById('pfZona').value) { alert('Seleziona la zona.'); return; }
+  }
+  if (currentStep === 2) {
+    if (!document.getElementById('pfPrezzo').value) { alert('Inserisci il prezzo mensile.'); return; }
+    if (!document.getElementById('pfDa').value) { alert('Seleziona la disponibilità.'); return; }
+  }
+  pfGoTo(currentStep + 1);
+}
+
+function pfBack(currentStep) {
+  pfGoTo(currentStep - 1);
+}
+
+// ── TIPO SELECTION ─────────────────────────────────────────
+function pfSelectTipo(tipo) {
+  pfData.tipo = tipo;
+  document.querySelectorAll('.pf-option').forEach(el => el.classList.remove('sel'));
+  document.getElementById('pfTipo-' + tipo).classList.add('sel');
+}
+
+// ── TOGGLE INCLUSO ─────────────────────────────────────────
+function pfToggleIncluso() {
+  pfData.incluso = !pfData.incluso;
+  document.getElementById('pfToggleIncluso').classList.toggle('on', pfData.incluso);
+}
+
+// ── SERVICE TOGGLE ─────────────────────────────────────────
+function pfToggleService(id) {
+  const el = document.getElementById('pfSrv-' + id);
+  if (pfData.servizi.has(id)) {
+    pfData.servizi.delete(id);
+    el.classList.remove('sel');
+  } else {
+    pfData.servizi.add(id);
+    el.classList.add('sel');
+  }
+}
+
+// ── SUBMIT ─────────────────────────────────────────────────
+function pfSubmit() {
+  const nome = document.getElementById('pfNome').value.trim();
+  const tel  = document.getElementById('pfTel').value.trim();
+  if (!nome) { alert('Inserisci il tuo nome.'); return; }
+  if (!tel)  { alert('Inserisci un numero di telefono.'); return; }
+
+  const tipoMap = { singola: 'Stanza singola', doppia: 'Stanza doppia', posto: 'Posto letto', app: 'Appartamento intero' };
+  const payload = {
+    tipo:     'proprietario',
+    alloggio: tipoMap[pfData.tipo] || pfData.tipo,
+    via:      document.getElementById('pfVia').value.trim(),
+    zona:     document.getElementById('pfZona').value,
+    piano:    document.getElementById('pfPiano').value,
+    prezzo:   document.getElementById('pfPrezzo').value,
+    mq:       document.getElementById('pfMq').value,
+    incluso:  pfData.incluso ? 'Sì' : 'No',
+    da:       document.getElementById('pfDa').value,
+    servizi:  Array.from(pfData.servizi).join(', '),
+    nome:     nome,
+    tel:      tel,
+    email:    document.getElementById('pfEmail').value.trim(),
+    note:     document.getElementById('pfNote').value.trim(),
+    ts:       new Date().toISOString(),
+  };
+
+  // Save locally
+  try {
+    const existing = JSON.parse(localStorage.getItem('lecto_prop_submissions') || '[]');
+    existing.push(payload);
+    localStorage.setItem('lecto_prop_submissions', JSON.stringify(existing));
+  } catch(_) {}
+
+  // Send to GAS endpoint (same as waitlist)
+  const endpoint = 'https://script.google.com/macros/s/AKfycbyJUdXFC7xctE_PHV25IqAo4-BNOIJZAALyT3EG9nZ5XRwNOEFbrVUjoGBucoSbbjXkaw/exec';
+  if (endpoint) {
+    fetch(endpoint, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).catch(() => {});
+  }
+
+  pfGoTo('success');
+}
+</script>
 </body>
 </html>
