@@ -788,7 +788,7 @@ async function submitWaitlist() {
   }
   errEl.textContent = '';
 
-  // Costruisce payload dai campi del config (usa gli id originali: wlNome, wlEmail, …)
+  // Costruisce payload con le chiavi attese dal GAS (wlNome, wlEmail, …)
   const payload = {};
   cfg.fields.forEach(f => {
     const el = document.getElementById(f.id);
