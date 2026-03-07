@@ -36,7 +36,6 @@ const WAITLIST_CONFIG = {
   fields: [
     {
       id:           'wlNome',
-      key:          'nome',
       label:        'Nome e cognome',
       type:         'text',
       required:     true,
@@ -45,7 +44,6 @@ const WAITLIST_CONFIG = {
     },
     {
       id:           'wlEmail',
-      key:          'email',
       label:        'Email',
       type:         'email',
       required:     true,
@@ -54,7 +52,6 @@ const WAITLIST_CONFIG = {
     },
     {
       id:           'wlTel',
-      key:          'telefono',
       label:        'Telefono',
       type:         'tel',
       required:     false,
@@ -63,7 +60,6 @@ const WAITLIST_CONFIG = {
     },
     {
       id:          'wlCorso',
-      key:         'corso',
       label:       'Corso di laurea / Facoltà',
       type:        'text',
       required:    false,
@@ -71,7 +67,6 @@ const WAITLIST_CONFIG = {
     },
     {
       id:       'wlDa',
-      key:      'da',
       label:    'Disponibilità da',
       type:     'select',
       required: true,
@@ -85,7 +80,6 @@ const WAITLIST_CONFIG = {
     },
     {
       id:       'wlBudget',
-      key:      'budget',
       label:    'Budget mensile',
       type:     'select',
       required: true,
@@ -99,7 +93,6 @@ const WAITLIST_CONFIG = {
     },
     {
       id:          'wlNote',
-      key:         'note',
       label:       'Note o preferenze',
       type:        'textarea',
       required:    false,

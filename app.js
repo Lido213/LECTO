@@ -788,11 +788,11 @@ async function submitWaitlist() {
   }
   errEl.textContent = '';
 
-  // Costruisce payload usando f.key (nome atteso dal GAS) oppure f.id come fallback
+  // Costruisce payload con le chiavi attese dal GAS (wlNome, wlEmail, …)
   const payload = {};
   cfg.fields.forEach(f => {
     const el = document.getElementById(f.id);
-    if (el) payload[f.key || f.id] = el.value.trim();
+    if (el) payload[f.id] = el.value.trim();
   });
 
   const btn = document.getElementById('wlSubmitBtn');
