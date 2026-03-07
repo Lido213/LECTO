@@ -788,21 +788,11 @@ async function submitWaitlist() {
   }
   errEl.textContent = '';
 
-  // Costruisce payload con nomi brevi compatibili con lo script GAS
-  // (lo script legge d.nome, d.email, d.telefono, d.corso, d.da, d.budget, d.note)
-  const idToKey = {
-    wlNome:   'nome',
-    wlEmail:  'email',
-    wlTel:    'telefono',
-    wlCorso:  'corso',
-    wlDa:     'da',
-    wlBudget: 'budget',
-    wlNote:   'note',
-  };
+  // Costruisce payload dai campi del config (usa gli id originali: wlNome, wlEmail, …)
   const payload = {};
   cfg.fields.forEach(f => {
     const el = document.getElementById(f.id);
-    if (el) payload[idToKey[f.id] || f.id] = el.value.trim();
+    if (el) payload[f.id] = el.value.trim();
   });
 
   const btn = document.getElementById('wlSubmitBtn');
