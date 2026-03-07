@@ -788,11 +788,21 @@ async function submitWaitlist() {
   }
   errEl.textContent = '';
 
-  // Costruisce payload dai campi del config
+  // Costruisce payload con nomi brevi compatibili con lo script GAS
+  // (lo script legge d.nome, d.email, d.telefono, d.corso, d.da, d.budget, d.note)
+  const idToKey = {
+    wlNome:   'nome',
+    wlEmail:  'email',
+    wlTel:    'telefono',
+    wlCorso:  'corso',
+    wlDa:     'da',
+    wlBudget: 'budget',
+    wlNote:   'note',
+  };
   const payload = {};
   cfg.fields.forEach(f => {
     const el = document.getElementById(f.id);
-    if (el) payload[f.id] = el.value.trim();
+    if (el) payload[idToKey[f.id] || f.id] = el.value.trim();
   });
 
   const btn = document.getElementById('wlSubmitBtn');
@@ -806,12 +816,13 @@ async function submitWaitlist() {
 
   if (cfg.endpoint) {
     try {
-      // Google Apps Script richiede mode:'no-cors' (non si può leggere la risposta,
-      // ma il dato arriva ugualmente nel foglio). I dati sono già in localStorage.
+      // Google Apps Script + no-cors: occorre Content-Type: text/plain
+      // (application/json non è un "simple header" e viene bloccato dal browser).
+      // Il corpo è comunque JSON valido e GAS lo legge via e.postData.contents.
       await fetch(cfg.endpoint, {
         method: 'POST',
         mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify(payload),
       });
     } catch (_) {
