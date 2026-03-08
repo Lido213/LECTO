@@ -20,7 +20,7 @@ const WAITLIST_CONFIG = {
   //   endpoint: 'https://api.airtable.com/v0/<BASE_ID>/<NOME_TABELLA>'
   //   + aggiungi in app.js il header: Authorization: 'Bearer <TOKEN>'
   // ─────────────────────────────────────────────────────────────────────────────
-  endpoint: 'https://script.google.com/macros/s/AKfycbyJUdXFC7xctE_PHV25IqAo4-BNOIJZAALyT3EG9nZ5XRwNOEFbrVUjoGBucoSbbjXkaw/exec',
+  endpoint: 'https://script.google.com/macros/s/AKfycbxgJCgbWu4s6TGdP88vqIXNAyXT4UHIWzM0tx8AQQ3RCaFvymmTOfnzBI9yWzQyBmu1Mw/exec',
 
   // Testi UI
   title:        "Lista d'attesa",
