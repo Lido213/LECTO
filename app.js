@@ -799,29 +799,36 @@ async function submitWaitlist() {
   btn.disabled = true;
   btn.textContent = 'Invio in corso…';
 
-  // Salva in localStorage come backup
-  const lista = JSON.parse(localStorage.getItem('waitlist') || '[]');
-  lista.push({ ...payload, ts: new Date().toISOString() });
-  localStorage.setItem('waitlist', JSON.stringify(lista));
+  try {
+    // Salva in localStorage come backup
+    const lista = JSON.parse(localStorage.getItem('waitlist') || '[]');
+    lista.push({ ...payload, ts: new Date().toISOString() });
+    localStorage.setItem('waitlist', JSON.stringify(lista));
 
-  if (cfg.endpoint) {
-    try {
+    if (cfg.endpoint) {
       // Google Apps Script + no-cors: occorre Content-Type: text/plain
       // (application/json non è un "simple header" e viene bloccato dal browser).
       // Il corpo è comunque JSON valido e GAS lo legge via e.postData.contents.
-      await fetch(cfg.endpoint, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(payload),
-      });
-    } catch (_) {
-      // errore di rete: i dati sono già salvati in localStorage
+      try {
+        await fetch(cfg.endpoint, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(payload),
+        });
+      } catch (_) {
+        // errore di rete: i dati sono già salvati in localStorage
+      }
     }
-  }
 
-  document.getElementById('waitlistForm').style.display = 'none';
-  document.getElementById('waitlistSuccess').style.display = '';
+    document.getElementById('waitlistForm').style.display = 'none';
+    document.getElementById('waitlistSuccess').style.display = '';
+  } catch (err) {
+    // Errore JS inatteso: ripristina il pulsante e mostra un messaggio
+    btn.disabled = false;
+    btn.textContent = cfg.submitLabel;
+    errEl.textContent = 'Si è verificato un errore. Riprova.';
+  }
 }
 
 // ── INIT ──────────────────────────────────────────────────
