@@ -539,7 +539,7 @@ input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height:
 /* ── Tablet 640 px + ──────────────────────────────────────────── */
 @media (min-width: 640px) {
 
-  /* Remove the 430 px phone-frame: fill the full browser window */
+  /* Remove the 430 px phone-frame */
   .app {
     max-width: 100%;
     border-left: none;
@@ -547,10 +547,30 @@ input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height:
     box-shadow: none;
   }
 
-  /* Mini-cards: replace horizontal scroll with a 3-column grid */
+  /* ── Split-screen: stanze (left) + mappa (right), always both visible ── */
+  main { flex-direction: row; }
+
+  #view-stanze,
+  #view-mappa {
+    display: flex !important;   /* always visible regardless of active class */
+    flex: 1;
+    min-width: 0;
+  }
+
+  #view-stanze {
+    flex-direction: column;
+    overflow: hidden;
+    border-right: 1.5px solid var(--border);
+  }
+
+  /* ── Bottom nav: hide Mappa and Instagram (handled by split layout) ── */
+  .bottom-nav button[onclick*="mappa"],
+  .bottom-nav a[href*="instagram"] { display: none; }
+
+  /* Mini-cards: 2-column grid inside the left panel */
   .apt-row {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: .75rem;
     overflow-x: visible;
     scroll-snap-type: none;
@@ -582,14 +602,13 @@ input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height:
   }
   .detail-sheet { max-height: 82vh; max-height: 82dvh; }
 
-  /* ── Map card: left-side panel instead of bottom sheet ── */
+  /* ── Map card: slide in from the left within the map panel ── */
   .map-card {
     bottom: 1rem;
     left: 1rem;
     right: auto;
-    width: 300px;
+    width: 280px;
     border-radius: 16px;
-    /* off-state: slide out to the left */
     transform: translateX(calc(-100% - 1.5rem));
     transition: transform .32s cubic-bezier(.4,0,.2,1);
   }
@@ -599,14 +618,14 @@ input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height:
 /* ── Desktop 1024 px + ────────────────────────────────────────── */
 @media (min-width: 1024px) {
 
-  /* Filters panel: always expanded as a persistent left sidebar */
-  #view-stanze.active {
-    flex-direction: row;
+  /* Filters panel: always expanded as a persistent left sidebar inside stanze panel */
+  #view-stanze {
+    flex-direction: row;        /* filter sidebar + rooms */
     overflow: hidden;
   }
 
   .filters-bar {
-    width: 260px;
+    width: 240px;
     flex-shrink: 0;
     position: static;           /* no longer sticky */
     border-bottom: none;
@@ -628,26 +647,26 @@ input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height:
   /* Rooms column: fills remaining width and scrolls independently */
   .stanze-scroll { min-width: 0; }
 
-  /* Rooms grid: auto-fill, consistent 2rem side padding */
+  /* Rooms grid: auto-fill columns */
   .apt-row {
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    padding: 0 2rem .5rem;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+    padding: 0 1.5rem .5rem;
+    gap: .85rem;
   }
-  .wip-notice       { margin: 0 2rem .75rem; }
-  .apt-group-header { padding: .5rem 2rem .5rem; }
-  .results-bar      { padding: .8rem 2rem; }
+  .wip-notice       { margin: 0 1.5rem .75rem; }
+  .apt-group-header { padding: .5rem 1.5rem .5rem; }
+  .results-bar      { padding: .8rem 1.5rem; }
 
   /* Bigger hero */
-  .hero-strip { padding: 2rem 2rem 2.25rem; }
-  .hero-title { font-size: 2.5rem; }
+  .hero-strip { padding: 1.75rem 1.5rem 2rem; }
+  .hero-title { font-size: 2.2rem; }
 
   /* Wider modal dialogs */
   .contatti-sheet,
   .detail-sheet { max-width: 640px; }
 
   /* Wider map side card */
-  .map-card { width: 340px; }
+  .map-card { width: 320px; }
 }
 
 /* ── LISTA D'ATTESA ── */

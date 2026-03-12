@@ -834,3 +834,9 @@ async function submitWaitlist() {
 // ── INIT ──────────────────────────────────────────────────
 buildWaitlistForm();
 render();
+
+// On tablet/desktop the map panel is always visible (split layout),
+// so initialize Leaflet immediately without waiting for tab click.
+if (window.matchMedia('(min-width: 640px)').matches) {
+  requestAnimationFrame(() => requestAnimationFrame(() => initMap()));
+}
