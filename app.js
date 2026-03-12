@@ -672,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (Math.abs(dy) > 0) e.preventDefault();
   }
 
-  [filters].forEach(el => {
+  [hero, filters].forEach(el => {
     el.addEventListener('touchstart', forwardTouchStart, { passive: true });
     el.addEventListener('touchmove', forwardTouchMove, { passive: false });
   });
