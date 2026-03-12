@@ -530,6 +530,126 @@ input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height:
 .extra-item .service-icon { color: var(--muted); }
 .extra-item .service-label { color: var(--text-sm); }
 
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE LAYOUT
+   Tablet  : ≥ 640 px
+   Desktop : ≥ 1024 px
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Tablet 640 px + ──────────────────────────────────────────── */
+@media (min-width: 640px) {
+
+  /* Remove the 430 px phone-frame: fill the full browser window */
+  .app {
+    max-width: 100%;
+    border-left: none;
+    border-right: none;
+    box-shadow: none;
+  }
+
+  /* Mini-cards: replace horizontal scroll with a 3-column grid */
+  .apt-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .75rem;
+    overflow-x: visible;
+    scroll-snap-type: none;
+    padding: 0 1.25rem .5rem;
+  }
+  .mini-card { flex: none; }
+  .apt-row-wrap::after { display: none; } /* hide scroll-fade gradient */
+
+  /* Slightly larger hero */
+  .hero-strip { padding: 1.5rem 1.5rem 1.75rem; }
+  .hero-title  { font-size: 2rem; }
+
+  /* ── Overlays: bottom-sheet → centered modal ── */
+  .contatti-sheet,
+  .detail-sheet {
+    border-radius: 20px;
+    max-width: 520px;
+    bottom: auto;
+    top: 50%;
+    /* off-state: slightly below center + invisible */
+    transform: translateX(-50%) translateY(calc(-50% + 24px));
+    opacity: 0;
+    transition: transform .3s cubic-bezier(.32,0,.67,0), opacity .25s ease;
+  }
+  .contatti-overlay.open .contatti-sheet,
+  .detail-overlay.open .detail-sheet {
+    transform: translateX(-50%) translateY(-50%);
+    opacity: 1;
+  }
+  .detail-sheet { max-height: 82vh; max-height: 82dvh; }
+
+  /* ── Map card: left-side panel instead of bottom sheet ── */
+  .map-card {
+    bottom: 1rem;
+    left: 1rem;
+    right: auto;
+    width: 300px;
+    border-radius: 16px;
+    /* off-state: slide out to the left */
+    transform: translateX(calc(-100% - 1.5rem));
+    transition: transform .32s cubic-bezier(.4,0,.2,1);
+  }
+  .map-card.visible { transform: translateX(0); }
+}
+
+/* ── Desktop 1024 px + ────────────────────────────────────────── */
+@media (min-width: 1024px) {
+
+  /* Filters panel: always expanded as a persistent left sidebar */
+  #view-stanze.active {
+    flex-direction: row;
+    overflow: hidden;
+  }
+
+  .filters-bar {
+    width: 260px;
+    flex-shrink: 0;
+    position: static;           /* no longer sticky */
+    border-bottom: none;
+    border-right: 1.5px solid var(--border);
+    overflow-y: auto;
+    align-self: stretch;
+  }
+
+  /* Hide the collapse-toggle chevron on desktop */
+  .filters-toggle { display: none; }
+
+  /* Always show filter panel — override the max-height animation */
+  .filters-panel {
+    max-height: none !important;
+    overflow: visible;
+  }
+  .filters-inner { padding: 1rem 1.25rem 1.5rem; }
+
+  /* Rooms column: fills remaining width and scrolls independently */
+  .stanze-scroll { min-width: 0; }
+
+  /* Rooms grid: auto-fill, consistent 2rem side padding */
+  .apt-row {
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    padding: 0 2rem .5rem;
+    gap: 1rem;
+  }
+  .wip-notice       { margin: 0 2rem .75rem; }
+  .apt-group-header { padding: .5rem 2rem .5rem; }
+  .results-bar      { padding: .8rem 2rem; }
+
+  /* Bigger hero */
+  .hero-strip { padding: 2rem 2rem 2.25rem; }
+  .hero-title { font-size: 2.5rem; }
+
+  /* Wider modal dialogs */
+  .contatti-sheet,
+  .detail-sheet { max-width: 640px; }
+
+  /* Wider map side card */
+  .map-card { width: 340px; }
+}
+
 /* ── LISTA D'ATTESA ── */
 .waitlist-sheet { max-height: 92vh; overflow-y: auto; }
 .waitlist-intro {
