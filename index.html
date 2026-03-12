@@ -66,7 +66,19 @@
     <!-- ── STANZE VIEW ── -->
     <div id="view-stanze" class="view-content active">
 
-      <!-- FILTERS BAR (sticky) -->
+      <!-- HERO: pinned at top of the left panel, never scrolls away -->
+      <div class="hero-strip" id="heroStrip">
+        <div class="hero-eyebrow">Polo Universitario di Lecco</div>
+        <h1 class="hero-title">Trova la tua stanza.<br/><em>Senza stress.</em></h1>
+        <p class="hero-sub">Stanze arredate vicino al Politecnico.</p>
+      </div>
+
+      <!-- STANZE CONTENT: filters + scrolling list
+           on tablet: filters collapse on top, list scrolls below
+           on desktop: filters become a sidebar on the left         -->
+      <div class="stanze-content">
+
+      <!-- FILTERS BAR (collapsible on tablet, always-open sidebar on desktop) -->
       <div class="filters-bar" id="filtersBar">
         <div class="filters-toggle" onclick="toggleFiltersPanel(event)">
           <div class="filters-toggle-left">
@@ -112,15 +124,8 @@
         </div>
       </div>
 
-      <!-- SCROLL AREA - hero is inside so scroll is always long enough -->
+      <!-- SCROLL AREA -->
       <div class="stanze-scroll" id="stanze-scroll-el">
-
-      <!-- HERO inside scroll -->
-      <div class="hero-strip" id="heroStrip">
-        <div class="hero-eyebrow">Polo Universitario di Lecco</div>
-        <h1 class="hero-title">Trova la tua stanza.<br/><em>Senza stress.</em></h1>
-        <p class="hero-sub">Stanze arredate vicino al Politecnico.</p>
-      </div>
 
       <div class="results-bar">
         <div class="results-count"><strong id="countNum">6</strong> stanze trovate</div>
@@ -140,6 +145,8 @@
         <button class="empty-reset" onclick="resetFilters()">Azzera filtri</button>
       </div>
       </div><!-- end stanze-scroll -->
+
+      </div><!-- end stanze-content -->
 
     </div>
 
