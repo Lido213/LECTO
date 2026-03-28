@@ -72,10 +72,10 @@ const WAITLIST_CONFIG = {
       required: true,
       half:     true,
       options: [
-        'Settembre 2025', 'Ottobre 2025', 'Novembre 2025', 'Dicembre 2025',
-        'Gennaio 2026',   'Febbraio 2026', 'Marzo 2026',   'Aprile 2026',
-        'Maggio 2026',    'Giugno 2026',   'Luglio 2026',  'Agosto 2026',
-        'Settembre 2026', 'Ottobre 2026',  'Non so ancora',
+        'Settembre 2026', 'Ottobre 2026', 'Novembre 2026', 'Dicembre 2026',
+        'Gennaio 2027',   'Febbraio 2027', 'Marzo 2027',   'Aprile 2027',
+        'Maggio 2027',    'Giugno 2027',   'Luglio 2027',  'Agosto 2027',
+        'Settembre 2027', 'Non so ancora',
       ],
     },
     {

@@ -57,7 +57,7 @@ const rooms = [
   // ── VIA PONCIONE ───────────────────────────────────────────────
   {
     id: 1,
-    name: "Stanza 100",
+    name: "Stanza 1",
     zone: "Via Poncione",
     price: 450,                          // € / mese
     status: "wip",                       // "available" | "wip"
