@@ -628,6 +628,15 @@ function closeChiSiamo(e) {
   document.getElementById('chiSiamoOverlay').classList.remove('open');
 }
 
+// ── FAQ ───────────────────────────────────────────────────
+function toggleFaq() {
+  document.getElementById('faqOverlay').classList.add('open');
+}
+function closeFaq(e) {
+  if (e && e.target !== document.getElementById('faqOverlay')) return;
+  document.getElementById('faqOverlay').classList.remove('open');
+}
+
 // ── CONTATTI ─────────────────────────────────────────────
 function toggleContatti(btn) {
   const overlay = document.getElementById('contattiOverlay');
