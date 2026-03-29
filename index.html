@@ -2,9 +2,6 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8"/>
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <!-- iOS Safari -->
 <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -16,6 +13,11 @@
 <!-- Prevent phone number detection -->
 <meta name="format-detection" content="telephone=no"/>
 <title>LECTO — Student Housing Lecco</title>
+<meta name="description" content="LECTO — Stanze per studenti vicino al Politecnico di Lecco. Qualità verificata, prezzi trasparenti, gestione semplice."/>
+<meta property="og:title" content="LECTO — Student Housing Lecco"/>
+<meta property="og:description" content="Stanze per studenti vicino al Politecnico di Lecco. Qualità verificata, prezzi trasparenti."/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="it_IT"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@900&family=Anton&display=swap" rel="stylesheet"/>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
@@ -52,7 +54,7 @@
             <span class="menu-item-label">Lista d&#8217;attesa</span>
             <span class="menu-item-arrow">›</span>
           </a>
-          <a class="menu-item" href="javascript:void(0)">
+          <a class="menu-item" href="javascript:void(0)" onclick="toggleFaq();toggleMenu(event);">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r=".8" fill="currentColor" stroke="none"/></svg>
             <span class="menu-item-label">FAQ</span>
             <span class="menu-item-arrow">›</span>
@@ -69,8 +71,8 @@
       <!-- HERO: pinned at top of the left panel, never scrolls away -->
       <div class="hero-strip" id="heroStrip">
         <div class="hero-eyebrow">Polo Universitario di Lecco</div>
-        <h1 class="hero-title">Trova la tua stanza.<br/><em>Senza stress.</em></h1>
-        <p class="hero-sub">Stanze arredate vicino al Politecnico.</p>
+        <h1 class="hero-title">Trova la tua stanza.<br/><em>Gestita, verificata.</em></h1>
+        <p class="hero-sub">Stanze arredate vicino al Politecnico. Prezzo chiaro, zero sorprese.</p>
       </div>
 
       <!-- STANZE CONTENT: filters + scrolling list
@@ -254,16 +256,6 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
       </a>
 
-      <a class="contatti-row" href="https://wa.me/39XXXXXXXXXX" target="_blank">
-        <div class="contatti-icon" style="background:#e8faf0;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#25d366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-        </div>
-        <div class="contatti-info">
-          <div class="contatti-label">WhatsApp</div>
-          <div class="contatti-value">Scrivici su WhatsApp</div>
-        </div>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
-      </a>
 
     </div>
   </div>
@@ -283,23 +275,56 @@
     <div class="chisiamo-body">
       <div class="chisiamo-row">
         <span class="chisiamo-emoji">🎓</span>
-        <p>Siamo due ragazzi di Lecco, studenti del Poli. Quattro anni fa abbiamo iniziato ad affittare un appartamento di famiglia a degli studenti e, in questo periodo, abbiamo conosciuto vari ragazzi, italiani e stranieri.</p>
+        <p>Siamo due ragazzi di Lecco, studenti del Poli. Dal 2021 gestiamo stanze per studenti: 4 anni di esperienza, 6 stanze in 2 appartamenti, ragazzi italiani e internazionali.</p>
       </div>
       <div class="chisiamo-row">
         <span class="chisiamo-emoji">📍</span>
-        <p>A Lecco la mancanza di una domanda strutturata porta gli studenti a perdere tempo tra annunci poco chiari e soluzioni non ottimali, in un mercato sottovalutato che spesso non dà loro l'attenzione che meritano.</p>
+        <p>A Lecco la mancanza di un'offerta strutturata porta gli studenti a perdere tempo tra annunci poco chiari. LECTO gestisce direttamente le stanze: ogni alloggio è visitato e valutato prima di essere pubblicato.</p>
       </div>
       <div class="chisiamo-row">
         <span class="chisiamo-emoji">🎯</span>
-        <p>L'obiettivo è strutturare il mercato per migliorare l'esperienza di studenti e proprietari.</p>
+        <p>Prezzi espliciti, contratti chiari, manutenzione seguita. Niente sorprese per chi affitta, niente grane per chi affitta la stanza.</p>
       </div>
       <div class="chisiamo-row">
         <span class="chisiamo-emoji">📚</span>
-        <p>Vogliamo partire dalle basi: conoscere davvero il mercato, creando una community in cui possiate darci un feedback diretto sulla vostra esperienza di affitto e su come potrebbe essere migliorata.</p>
+        <p>Lavoriamo con studenti di tutti i corsi del Polo di Lecco e con studenti internazionali. La lista d'attesa ci permette di abbinare la stanza giusta alla persona giusta.</p>
       </div>
       <div class="chisiamo-row">
         <span class="chisiamo-emoji">🏡</span>
-        <p>Ci rivolgiamo anche ai proprietari di casa, con l'obiettivo di ampliare l'offerta e rendere più efficiente la pubblicazione e gestione degli immobili.</p>
+        <p>Collaboriamo anche con i proprietari che vogliono affidare la gestione senza pensieri, mantenendo il controllo sulla propria casa.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ SHEET -->
+<div class="contatti-overlay" id="faqOverlay" onclick="closeFaq(event)">
+  <div class="contatti-sheet" id="faqSheet" style="max-height:85vh;overflow-y:auto;">
+    <div class="contatti-handle"></div>
+    <div class="contatti-header">
+      <div class="contatti-title">FAQ</div>
+      <button class="contatti-close" onclick="closeFaq(null)">✕</button>
+    </div>
+    <div class="chisiamo-body">
+      <div class="chisiamo-row">
+        <span class="chisiamo-emoji">🏗️</span>
+        <p><strong>Le stanze sono già disponibili?</strong><br/>Stiamo completando i lavori. Iscriviti alla lista d'attesa per essere contattato appena apriamo.</p>
+      </div>
+      <div class="chisiamo-row">
+        <span class="chisiamo-emoji">💶</span>
+        <p><strong>Il prezzo è tutto incluso?</strong><br/>Dipende dalla stanza. Ogni annuncio indica chiaramente se le utenze sono incluse o escluse.</p>
+      </div>
+      <div class="chisiamo-row">
+        <span class="chisiamo-emoji">🔑</span>
+        <p><strong>Posso visitare la stanza prima di prenotare?</strong><br/>Sì, organizziamo visite su appuntamento. Contattaci via email o Instagram.</p>
+      </div>
+      <div class="chisiamo-row">
+        <span class="chisiamo-emoji">🏢</span>
+        <p><strong>LECTO è un'agenzia immobiliare?</strong><br/>No. LECTO è una piattaforma di gestione per student housing. Non siamo intermediari: gestiamo direttamente le stanze in collaborazione con i proprietari.</p>
+      </div>
+      <div class="chisiamo-row">
+        <span class="chisiamo-emoji">📋</span>
+        <p><strong>Come funziona la lista d'attesa?</strong><br/>Lasci i tuoi dati e ti contattiamo quando si libera una stanza adatta a te. Nessun impegno.</p>
       </div>
     </div>
   </div>

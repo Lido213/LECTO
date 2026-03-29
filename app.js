@@ -49,14 +49,14 @@ const mapApts = {
   poncione: {
     name: "Via Poncione",
     sub: "3 stanze disponibili · 4° piano",
-    lat: 45.8614, lng: 9.3887,
+    lat: 45.8357, lng: 9.4136,
     priceFrom: 450,
     rooms: [1,2,3],
   },
   isola: {
     name: "Via dell'Isola",
     sub: "3 stanze · 2° piano · ascensore",
-    lat: 45.8501, lng: 9.3978,
+    lat: 45.8478, lng: 9.3949,
     priceFrom: 550,
     rooms: [4,5,6],
     featured: true,
@@ -626,6 +626,15 @@ function toggleChiSiamo() {
 function closeChiSiamo(e) {
   if (e && e.target !== document.getElementById('chiSiamoOverlay')) return;
   document.getElementById('chiSiamoOverlay').classList.remove('open');
+}
+
+// ── FAQ ───────────────────────────────────────────────────
+function toggleFaq() {
+  document.getElementById('faqOverlay').classList.add('open');
+}
+function closeFaq(e) {
+  if (e && e.target !== document.getElementById('faqOverlay')) return;
+  document.getElementById('faqOverlay').classList.remove('open');
 }
 
 // ── CONTATTI ─────────────────────────────────────────────

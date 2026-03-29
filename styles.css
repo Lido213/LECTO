@@ -125,15 +125,15 @@ main { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: 
 }
 .map-pin svg .pin-bg { fill: #fff; }
 .map-pin.gold svg .pin-bg { fill: #fdf5e4; stroke: #e5b34c !important; }
-.map-pin.active svg .pin-bg { fill: #143654; }
+.map-pin.active svg .pin-bg { fill: var(--navy); }
 .map-pin.gold.active svg .pin-bg { fill: #e5b34c; }
-.map-pin svg .pin-num { fill: #143654; }
+.map-pin svg .pin-num { fill: var(--navy); }
 .map-pin.active svg .pin-num { fill: #fff; }
 .map-pin.gold svg .pin-num { fill: #8a6010; }
-.map-pin.gold.active svg .pin-num { fill: #143654; }
+.map-pin.gold.active svg .pin-num { fill: var(--navy); }
 .pin-label {
-  font-family: 'DM Sans', sans-serif; font-size: .65rem; font-weight: 700;
-  color: #143654; text-align: center; margin-top: 2px;
+  font-family: var(--font-body); font-size: .65rem; font-weight: 700;
+  color: var(--navy); text-align: center; margin-top: 2px;
   white-space: nowrap; background: rgba(255,255,255,.92);
   border-radius: 4px; padding: 1px 5px;
   box-shadow: 0 1px 3px rgba(0,0,0,.12);
@@ -141,7 +141,7 @@ main { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: 
 /* Poli marker */
 .map-poli {
   position: absolute; transform: translate(-50%, -100%);
-  background: #143654; color: #fff; border-radius: 7px;
+  background: var(--navy); color: #fff; border-radius: 7px;
   padding: 4px 8px; font-size: .62rem; font-weight: 700;
   font-family: 'DM Sans',sans-serif; white-space: nowrap;
   box-shadow: 0 2px 8px rgba(20,54,84,.35); z-index: 9;
@@ -150,7 +150,7 @@ main { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: 
 .map-poli::after {
   content: ''; position: absolute; top: 100%; left: 50%;
   transform: translateX(-50%);
-  border: 5px solid transparent; border-top-color: #143654;
+  border: 5px solid transparent; border-top-color: var(--navy);
 }
 
 /* Map bottom card */
@@ -226,7 +226,7 @@ main { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: 
 .stanze-content { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
 .hero-strip::after { display: none; }
 .hero-eyebrow { font-size: .58rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.45); margin-bottom: .35rem; }
-.hero-title { font-family: 'Cooper Black', 'Cooper BT', 'Playfair Display', Georgia, serif; font-weight: 900; font-size: 1.55rem; color: #fff; line-height: 1.1; margin-bottom: .35rem; }
+.hero-title { font-family: var(--font-title); font-weight: 900; font-size: 1.55rem; color: #fff; line-height: 1.1; margin-bottom: .35rem; }
 .hero-title em { color: var(--gold); font-style: normal; }
 .hero-sub { font-size: .78rem; color: rgba(255,255,255,.5); line-height: 1.5; margin-bottom: 0; }
 

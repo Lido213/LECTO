@@ -57,7 +57,7 @@ const rooms = [
   // ── VIA PONCIONE ───────────────────────────────────────────────
   {
     id: 1,
-    name: "Stanza 100",
+    name: "Stanza 1",
     zone: "Via Poncione",
     price: 450,                          // € / mese
     status: "wip",                       // "available" | "wip"
@@ -136,7 +136,7 @@ const rooms = [
     status: "wip",
     inclusive: false,
     size: "18 m²",
-    desc: "Stanza in ristrutturazione. Campus a 5 minuti in bici.",
+    desc: "Camera singola arredata al 2° piano con ascensore. Cucina attrezzata condivisa, lavatrice e WiFi inclusi. Il Polo a meno di 10 minuti a piedi.",
     tags: ["Camera singola", "Arredata", "WiFi"],
     gold: [],
     servizi: ["WiFi", "Lavatrice", "Frigorifero e Freezer", "Forno a Microonde"],
@@ -154,7 +154,7 @@ const rooms = [
     status: "wip",
     inclusive: false,
     size: "19 m²",
-    desc: "Stanza con balcone privato in arrivo.",
+    desc: "Camera arredata con balcone privato, 2° piano con ascensore. Cucina condivisa attrezzata, lavatrice e WiFi inclusi.",
     tags: ["Balcone privato", "Arredata", "WiFi"],
     gold: [],
     servizi: ["WiFi", "Lavatrice", "Forno", "Smart-TV"],
