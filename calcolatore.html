@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcolatore Canone Concordato — LECTO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    /* =============================================
+       DESIGN TOKENS — LECTO Brand
+       ============================================= */
+    :root {
+      --navy:       #143654;
+      --navy-d:     #0d2438;
+      --navy-l:     #1d4d78;
+      --gold:       #E5B34C;
+      --gold-l:     #f0c96a;
+      --gold-pale:  #fdf5e4;
+      --bg:         #ffffff;
+      --surface:    #ffffff;
+      --border:     #f0f0f0;
+      --border-dark:#e0e0e0;
+      --muted:      #8fa0b0;
+      --text:       #143654;
+      --text-sm:    #6a8099;
+      --green:      #16a34a;
+      --green-bg:   rgba(22,163,74,.1);
+
+      --font-title: 'Playfair Display', Georgia, serif;
+      --font-body:  'DM Sans', system-ui, sans-serif;
+      --font-mono:  'DM Sans', monospace;
+
+      --color-danger-bg:   #fef2f2;
+      --color-danger-text: #b91c1c;
+      --color-warning-bg:  #fffbeb;
+      --color-warning-text:#92400e;
+      --color-info-bg:     #eff6ff;
+      --color-info-text:   #1d4ed8;
+      --color-success-bg:  #f0fdf4;
+      --color-success-text:#166534;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --max-width: 430px;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: 100%; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: var(--font-body);
+      background: #f4f4f0;
+      color: var(--navy);
+      height: 100%;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: var(--bg);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 60px rgba(0,0,0,.08);
+    }
+
+    /* ── HEADER (matches LECTO site) ── */
+    .header {
+      flex-shrink: 0;
+      z-index: 1000;
+      background: var(--bg);
+      padding: .5rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--navy);
+    }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      text-decoration: none;
+    }
+    .header-logo-text {
+      font-family: var(--font-title);
+      font-weight: 900;
+      font-size: 1.3rem;
+      color: var(--navy);
+      letter-spacing: .02em;
+    }
+    .header-logo-icon {
+      width: 32px; height: 32px;
+      fill: var(--navy);
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .header-badge {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border: 1px solid var(--navy);
+      color: var(--navy);
+      border-radius: 999px;
+    }
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+      font-size: .75rem;
+      font-weight: 700;
+      color: var(--navy);
+      text-decoration: none;
+      padding: 6px 12px;
+      border: 1.5px solid var(--navy);
+      border-radius: var(--radius-md);
+      transition: background .15s;
+    }
+    .back-btn:hover { background: rgba(20,54,84,.05); }
+    .back-btn svg { width: 14px; height: 14px; }
+
+    /* ── HERO STRIP ── */
+    .hero-strip {
+      background: var(--navy);
+      padding: 1.25rem 1.25rem 1.1rem;
+      flex-shrink: 0;
+    }
+    .hero-eyebrow {
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.45);
+      margin-bottom: .35rem;
+    }
+    .hero-title {
+      font-family: var(--font-title);
+      font-weight: 900;
+      font-size: 1.45rem;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: .35rem;
+    }
+    .hero-title em { color: var(--gold); font-style: normal; }
+    .hero-sub {
+      font-size: .75rem;
+      color: rgba(255,255,255,.5);
+      line-height: 1.5;
+    }
+
+    /* ── SCROLLABLE CONTENT ── */
+    .scroll-content {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: contain;
+      padding: .75rem 1.25rem 6rem;
+    }
+
+    /* ── CARD / SECTION ── */
+    .card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.1rem;
+      margin-bottom: .75rem;
+    }
+    .card-title {
+      font-size: .6rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: .75rem;
+    }
+
+    .field { margin-bottom: .75rem; }
+    .field:last-child { margin-bottom: 0; }
+    .field-label {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--navy);
+      display: block;
+      margin-bottom: .4rem;
+    }
+    .field-label small { color: var(--muted); font-weight: 400; font-size: .72rem; }
+
+    /* ── INPUT ── */
+    input[type="number"],
+    input[type="text"] {
+      padding: .55rem .75rem;
+      font-size: .9rem;
+      font-weight: 600;
+      border: 1.5px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      background: #f5f7f9;
+      color: var(--navy);
+      font-family: var(--font-body);
+      transition: border-color .15s;
+      -webkit-appearance: none;
+    }
+    input:focus { outline: none; border-color: var(--navy); }
+    .input-mq   { width: 100px; }
+    .input-euro { width: 130px; }
+    .input-search { width: 100%; }
+    .input-row { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+    .input-unit { font-size: .78rem; color: var(--muted); font-weight: 500; }
+
+    /* ── RADIO — ZONA (3 col) ── */
+    .zona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+    .zona-card { position: relative; }
+    .zona-card input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .zona-card label {
+      display: block; padding: .6rem .7rem; font-size: .75rem;
+      border: 1.5px solid var(--border-dark); border-radius: var(--radius-md);
+      cursor: pointer; color: var(--navy); user-select: none; line-height: 1.45;
+      transition: all .15s; text-align: center;
+    }
+    .zona-card label:hover { background: #f5f7f9; }
+    .zona-card input:checked + label {
+      background: var(--navy); border-color: var(--navy);
+    }
+    .zona-label-name { font-weight: 800; display: block; color: var(--navy); font-size: .8rem; }
+    .zona-card input:checked + label .zona-label-name { color: var(--gold); }
+    .zona-label-range { font-size: .6rem; color: var(--muted); display: block; margin-top: 2px; }
+    .zona-card input:checked + label .zona-label-range { color: rgba(255,255,255,.55); }
+
+    /* ── RADIO — FASCIA (3 col) ── */
+    .fascia-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin-bottom: .75rem; }
+    .fascia-card { position: relative; }
+    .fascia-card input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .fascia-card label {
+      display: block; padding: .6rem .65rem; font-size: .72rem;
+      border: 1.5px solid var(--border-dark); border-radius: var(--radius-md);
+      cursor: pointer; color: var(--navy); user-select: none; line-height: 1.4;
+      transition: all .15s;
+    }
+    .fascia-card label:hover { background: #f5f7f9; }
+    .fascia-card input:checked + label { background: var(--navy); border-color: var(--navy); }
+    .fascia-name { font-size: .6rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; display: block; }
+    .fascia-cond { font-size: .58rem; color: var(--text-sm); display: block; margin-top: 1px; }
+    .fascia-range { font-size: .78rem; font-weight: 800; display: block; margin-top: 4px; color: var(--navy); }
+    .fascia-card input:checked + label .fascia-name  { color: rgba(229,179,76,.8); }
+    .fascia-card input:checked + label .fascia-cond  { color: rgba(255,255,255,.45); }
+    .fascia-card input:checked + label .fascia-range { color: var(--gold); }
+
+    /* ── RADIO PILLS ── */
+    .radio-pills { display: flex; gap: .4rem; flex-wrap: wrap; }
+    .radio-pill { position: relative; }
+    .radio-pill input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .radio-pill label {
+      display: block; padding: .45rem .9rem; font-size: .75rem; font-weight: 600;
+      border: 1.5px solid var(--border-dark); border-radius: var(--radius-md);
+      cursor: pointer; color: var(--navy); user-select: none; transition: all .15s;
+    }
+    .radio-pill label:hover { background: #f5f7f9; }
+    .radio-pill input:checked + label { background: var(--navy); color: var(--gold); border-color: var(--navy); }
+
+    /* ── CHECKBOX GRID ── */
+    .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .check-item { display: flex; align-items: center; gap: .5rem; }
+    .check-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--navy); cursor: pointer; flex-shrink: 0; }
+    .check-item label { font-size: .75rem; color: var(--navy); cursor: pointer; line-height: 1.35; }
+    .check-pct { font-size: .62rem; color: var(--muted); font-weight: 600; }
+
+    /* ── TAG ── */
+    .tag { display: inline-block; font-size: .6rem; padding: 2px 8px; border-radius: var(--radius-sm); font-weight: 700; }
+    .tag-warn   { background: var(--color-warning-bg); color: var(--color-warning-text); }
+    .tag-info   { background: var(--color-info-bg);    color: var(--color-info-text); }
+    .tag-ok     { background: var(--color-success-bg); color: var(--color-success-text); }
+
+    /* ── RICERCA QUARTIERE ── */
+    .search-wrap { position: relative; }
+    .search-dropdown {
+      position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+      background: var(--bg); border: 1.5px solid var(--navy);
+      border-radius: var(--radius-md); max-height: 220px; overflow-y: auto;
+      z-index: 100; display: none; box-shadow: 0 6px 24px rgba(20,54,84,.15);
+    }
+    .search-dropdown.open { display: block; }
+    .dd-item {
+      padding: .6rem .75rem; font-size: .75rem; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: flex-start; gap: .6rem;
+      border-bottom: 1px solid var(--border); transition: background .1s;
+    }
+    .dd-item:last-child { border-bottom: none; }
+    .dd-item:hover { background: #f5f7f9; }
+    .dd-name { font-weight: 700; display: block; color: var(--navy); }
+    .dd-streets { font-size: .6rem; color: var(--muted); display: block; margin-top: 1px; }
+    .dd-zone { font-size: .58rem; font-weight: 700; padding: 3px 8px; border-radius: var(--radius-sm); white-space: nowrap; flex-shrink: 0; }
+    .dd-zone.z1 { background: var(--color-danger-bg); color: var(--color-danger-text); }
+    .dd-zone.z2 { background: var(--color-warning-bg); color: var(--color-warning-text); }
+    .dd-zone.z3 { background: var(--color-info-bg); color: var(--color-info-text); }
+
+    .zona-result {
+      margin-top: .5rem; padding: .6rem .75rem; border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-dark); background: #f5f7f9;
+      display: none; justify-content: space-between; align-items: center; gap: .6rem;
+    }
+    .zona-result.visible { display: flex; }
+    .zona-result-label { font-size: .65rem; color: var(--muted); }
+    .zona-result-value { font-size: .82rem; font-weight: 700; color: var(--navy); display: block; margin-top: 1px; }
+    .warning-note {
+      margin-top: .5rem; font-size: .7rem; padding: .5rem .7rem; border-radius: var(--radius-md);
+      background: var(--color-warning-bg); color: var(--color-warning-text);
+      border: 1px solid rgba(146,64,14,.12); display: none;
+    }
+
+    /* ── BTN ── */
+    .btn-sm {
+      padding: .4rem .75rem; font-size: .68rem; font-weight: 700;
+      background: var(--navy); color: var(--gold); border: none; border-radius: var(--radius-md);
+      cursor: pointer; font-family: var(--font-body); white-space: nowrap; transition: opacity .15s;
+    }
+    .btn-sm:hover { opacity: .85; }
+
+    /* ── ACCORDION ── */
+    .accordion { border: 1.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+    .accordion-trigger {
+      width: 100%; background: #f5f7f9; border: none; padding: .6rem .75rem;
+      display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer; font-family: var(--font-body); font-size: .75rem;
+      font-weight: 700; color: var(--navy); transition: background .15s;
+    }
+    .accordion-trigger:hover { background: var(--bg); }
+    .accordion-arrow { font-size: .6rem; color: var(--muted); transition: transform .2s; }
+    .accordion-trigger.open .accordion-arrow { transform: rotate(180deg); }
+    .accordion-body { display: none; padding: .9rem .75rem; border-top: 1px solid var(--border); background: var(--bg); }
+    .accordion-body.open { display: block; }
+
+    .el-section { margin-bottom: .9rem; }
+    .el-section:last-of-type { margin-bottom: 0; }
+    .el-header { display: flex; align-items: center; gap: .5rem; margin-bottom: .5rem; }
+    .el-badge { font-size: .58rem; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-sm); }
+    .el-badge.a { background: var(--color-danger-bg); color: var(--color-danger-text); }
+    .el-badge.b { background: var(--color-warning-bg); color: var(--color-warning-text); }
+    .el-badge.c { background: var(--color-info-bg); color: var(--color-info-text); }
+    .el-desc { font-size: .62rem; color: var(--muted); }
+    .el-list { display: flex; flex-direction: column; gap: .4rem; }
+    .el-item { display: flex; align-items: flex-start; gap: .5rem; }
+    .el-item input[type="checkbox"] { width: 15px; height: 15px; margin-top: 2px; flex-shrink: 0; cursor: pointer; accent-color: var(--navy); }
+    .el-item label { font-size: .72rem; color: var(--navy); cursor: pointer; line-height: 1.4; }
+
+    .counter-row { display: flex; gap: .4rem; margin-top: .75rem; flex-wrap: wrap; }
+    .counter { font-size: .6rem; font-weight: 600; padding: 2px 8px; border-radius: var(--radius-sm); }
+    .counter.a { background: var(--color-danger-bg); color: var(--color-danger-text); }
+    .counter.b { background: var(--color-warning-bg); color: var(--color-warning-text); }
+    .counter.c { background: var(--color-info-bg); color: var(--color-info-text); }
+
+    .suggerita-box {
+      margin-top: .75rem; padding: .65rem .75rem; border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-dark); background: #f5f7f9;
+      display: flex; justify-content: space-between; align-items: center; gap: .6rem;
+    }
+    .suggerita-label { font-size: .62rem; color: var(--muted); }
+    .suggerita-value { font-size: .78rem; font-weight: 700; color: var(--navy); display: block; margin-top: 2px; }
+
+    /* ── RESULT BOX ── */
+    .result-box {
+      background: var(--navy);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem 1.25rem;
+      margin-bottom: .75rem;
+    }
+    .result-eyebrow {
+      font-size: .58rem; font-weight: 700; color: var(--gold);
+      letter-spacing: .12em; text-transform: uppercase; margin-bottom: .3rem;
+    }
+    .result-range {
+      font-family: var(--font-title); font-weight: 900;
+      font-size: 1.6rem; color: #fff; margin-bottom: .75rem; line-height: 1.1;
+    }
+    .result-meta {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,.12); padding-top: .6rem;
+    }
+    .result-meta-item { font-size: .6rem; color: rgba(255,255,255,.45); }
+    .result-meta-item strong { display: block; font-size: .72rem; color: rgba(255,255,255,.85); margin-bottom: 1px; }
+
+    /* ── BREAKDOWN ── */
+    .breakdown {
+      background: #f5f7f9; border-radius: var(--radius-lg);
+      padding: 1rem 1.1rem; margin-bottom: .75rem;
+    }
+    .breakdown-title {
+      font-size: .6rem; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .1em; margin-bottom: .6rem;
+    }
+    .step-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: .3rem 0; border-bottom: 1px solid var(--border); font-size: .72rem; gap: .6rem;
+    }
+    .step-row:last-child { border-bottom: none; }
+    .step-label { color: var(--text-sm); }
+    .step-value { font-weight: 700; color: var(--navy); white-space: nowrap; }
+    .step-value.highlight { color: var(--gold); }
+    .small-note { font-size: .62rem; color: var(--muted); padding-top: .5rem; line-height: 1.5; }
+
+    /* ── CONFRONTO FISCALE ── */
+    .compare-wrap { border-radius: var(--radius-lg); border: 1.5px solid var(--border); overflow: hidden; margin-bottom: .75rem; }
+    .compare-header {
+      background: #f5f7f9; padding: .55rem 1rem; font-size: .6rem; font-weight: 700;
+      color: var(--muted); text-transform: uppercase; letter-spacing: .1em;
+      border-bottom: 1px solid var(--border);
+    }
+    .compare-cols { display: grid; grid-template-columns: 1fr 1fr; }
+    .compare-col { padding: .9rem 1rem; background: var(--bg); }
+    .compare-col + .compare-col { border-left: 1px solid var(--border); }
+    .compare-badge {
+      font-size: .58rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: var(--radius-sm); display: inline-block; margin-bottom: .4rem;
+    }
+    .compare-badge.concordato { background: var(--navy); color: var(--gold); }
+    .compare-badge.libero { background: #f5f7f9; color: var(--muted); border: 1px solid var(--border-dark); }
+    .compare-col-title { font-size: .78rem; font-weight: 700; color: var(--navy); margin-bottom: 1px; }
+    .compare-col-sub { font-size: .62rem; color: var(--muted); margin-bottom: .6rem; }
+    .compare-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: .25rem 0; font-size: .68rem; border-bottom: 1px solid var(--border); gap: .4rem;
+    }
+    .compare-row:last-child { border-bottom: none; }
+    .compare-row-label { color: var(--text-sm); }
+    .compare-row-val { font-weight: 700; color: var(--navy); white-space: nowrap; }
+    .compare-row-val.neg { color: var(--color-danger-text); }
+    .compare-row-val.pos { color: var(--color-success-text); }
+
+    .winner-bar {
+      padding: .65rem 1rem; border-top: 1px solid var(--border); background: #f5f7f9;
+      display: flex; justify-content: space-between; align-items: center; gap: .6rem; flex-wrap: wrap;
+    }
+    .winner-text { font-size: .72rem; font-weight: 700; color: var(--navy); }
+    .winner-tag {
+      font-size: .58rem; padding: 3px 10px; border-radius: var(--radius-sm); font-weight: 700; white-space: nowrap;
+    }
+    .winner-tag.concordato-wins { background: var(--navy); color: var(--gold); }
+    .winner-tag.libero-wins { background: #f5f7f9; color: var(--navy); border: 1px solid var(--border-dark); }
+    .winner-tag.pari { background: var(--color-info-bg); color: var(--color-info-text); }
+
+    /* ── FOOTER NOTE ── */
+    .footer-note {
+      margin-top: 1rem; font-size: .6rem; color: var(--muted);
+      text-align: center; line-height: 1.6; padding-bottom: 1rem;
+    }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: var(--max-width);
+      background: var(--bg); border-top: 1.5px solid var(--border-dark);
+      padding: .5rem 1rem max(calc(.5rem + var(--safe-bottom)), .5rem);
+      display: flex; justify-content: space-around;
+      box-shadow: 0 -4px 20px rgba(20,54,84,.07); z-index: 1000;
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center; gap: .15rem;
+      background: none; border: none; color: var(--muted); cursor: pointer;
+      text-decoration: none; flex: 1; transition: color .2s;
+      padding: .2rem .3rem; border-radius: var(--radius-md);
+    }
+    .nav-item.active { color: var(--navy); }
+    .nav-item-icon { font-size: 1.15rem; line-height: 1; }
+    .nav-item-label { font-size: .5rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 380px) {
+      .zona-grid, .fascia-grid { grid-template-columns: 1fr; }
+      .compare-cols { grid-template-columns: 1fr; }
+      .compare-col + .compare-col { border-left: none; border-top: 1px solid var(--border); }
+      .checkbox-grid { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 640px) {
+      .app { max-width: 720px; }
+      .result-range { font-size: 2rem; }
+      .scroll-content { padding: 1.25rem 2rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <a href="proprietario.html" class="back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+      Proprietari
+    </a>
+    <div class="header-right">
+      <span class="header-badge">Strumento</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero-strip">
+    <p class="hero-eyebrow">Canone concordato · Lecco 2018</p>
+    <h1 class="hero-title">Calcolatore <em>canone massimo</em></h1>
+    <p class="hero-sub">Accordo Territoriale Comune di Lecco · L. 431/98 · D.M. 16/01/2017</p>
+  </div>
+
+  <div class="scroll-content">
+
+    <!-- 1. RICERCA QUARTIERE -->
+    <div class="card">
+      <p class="card-title">Trova la zona dal quartiere</p>
+      <div class="field">
+        <label class="field-label" for="search-input">
+          Cerca quartiere o via <small>— verifica con ALPE/ASPPI Lecco</small>
+        </label>
+        <div class="search-wrap">
+          <input type="text" class="input-search" id="search-input" placeholder="Es. Pescarenico, Via dell'Isola…" autocomplete="off">
+          <div class="search-dropdown" id="search-dropdown"></div>
+        </div>
+        <div class="zona-result" id="zona-result">
+          <div>
+            <span class="zona-result-label" id="zona-result-area"></span>
+            <strong class="zona-result-value" id="zona-result-zona"></strong>
+          </div>
+          <button class="btn-sm" id="btn-apply-zona" type="button">Applica</button>
+        </div>
+        <p class="warning-note" id="zona-warning"></p>
+      </div>
+    </div>
+
+    <!-- 2. ZONA -->
+    <div class="card">
+      <p class="card-title">Zona omogenea</p>
+      <div class="zona-grid">
+        <div class="zona-card">
+          <input type="radio" name="zona" id="z1" value="1" checked>
+          <label for="z1"><span class="zona-label-name">Zona 1</span><span class="zona-label-range">Centro · €51–93</span></label>
+        </div>
+        <div class="zona-card">
+          <input type="radio" name="zona" id="z2" value="2">
+          <label for="z2"><span class="zona-label-name">Zona 2</span><span class="zona-label-range">Intermedia · €36–77</span></label>
+        </div>
+        <div class="zona-card">
+          <input type="radio" name="zona" id="z3" value="3">
+          <label for="z3"><span class="zona-label-name">Zona 3</span><span class="zona-label-range">Periferia · €19–64</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. SUB-FASCIA -->
+    <div class="card">
+      <p class="card-title">Sub-Fascia</p>
+      <div class="fascia-grid" id="fascia-grid"></div>
+      <div class="accordion">
+        <button class="accordion-trigger" id="acc-trigger" type="button">
+          <span>Aiutami a calcolare la sub-fascia</span>
+          <span class="accordion-arrow">▼</span>
+        </button>
+        <div class="accordion-body" id="acc-body">
+          <div class="el-section">
+            <div class="el-header"><span class="el-badge a">A — Essenziali</span><span class="el-desc">Tutti e 4 per Sub-Fascia 2</span></div>
+            <div class="el-list">
+              <div class="el-item"><input type="checkbox" id="eA1" class="el-a"><label for="eA1">Bagno interno completo con finestra o areazione</label></div>
+              <div class="el-item"><input type="checkbox" id="eA2" class="el-a"><label for="eA2">Impianto fisso di riscaldamento</label></div>
+              <div class="el-item"><input type="checkbox" id="eA3" class="el-a"><label for="eA3">Impianti tecnologici + acqua calda</label></div>
+              <div class="el-item"><input type="checkbox" id="eA4" class="el-a"><label for="eA4">Cucina o angolo cottura</label></div>
+            </div>
+          </div>
+          <div class="el-section">
+            <div class="el-header"><span class="el-badge b">B — Pregio</span><span class="el-desc">Per SF3: ≥8 B+C, ≥2 C</span></div>
+            <div class="el-list">
+              <div class="el-item"><input type="checkbox" id="eB1" class="el-b"><label for="eB1">Cucina abitabile con finestra</label></div>
+              <div class="el-item"><input type="checkbox" id="eB2" class="el-b"><label for="eB2">Ascensore (oltre 2° piano)</label></div>
+              <div class="el-item"><input type="checkbox" id="eB3" class="el-b"><label for="eB3">Cantina o soffitta</label></div>
+              <div class="el-item"><input type="checkbox" id="eB4" class="el-b"><label for="eB4">Costruzione/ristrutturazione &lt; 30 anni</label></div>
+              <div class="el-item"><input type="checkbox" id="eB5" class="el-b"><label for="eB5">Terrazzi o balconi</label></div>
+              <div class="el-item"><input type="checkbox" id="eB6" class="el-b"><label for="eB6">Caldaia singola o centralizzata autonoma</label></div>
+              <div class="el-item"><input type="checkbox" id="eB7" class="el-b"><label for="eB7">Posto auto o autorimessa</label></div>
+              <div class="el-item"><input type="checkbox" id="eB8" class="el-b"><label for="eB8">Doppi servizi (almeno uno completo)</label></div>
+            </div>
+          </div>
+          <div class="el-section">
+            <div class="el-header"><span class="el-badge c">C — Opzionali</span><span class="el-desc">Almeno 2 per Sub-Fascia 3</span></div>
+            <div class="el-list">
+              <div class="el-item"><input type="checkbox" id="eC1" class="el-c"><label for="eC1">Doppi bagni completi</label></div>
+              <div class="el-item"><input type="checkbox" id="eC2" class="el-c"><label for="eC2">Autorimessa/posto auto coperto esclusivo</label></div>
+              <div class="el-item"><input type="checkbox" id="eC3" class="el-c"><label for="eC3">Costruzione/ristrutturazione &lt; 20 anni</label></div>
+              <div class="el-item"><input type="checkbox" id="eC4" class="el-c"><label for="eC4">Verde condominiale o area gioco</label></div>
+              <div class="el-item"><input type="checkbox" id="eC5" class="el-c"><label for="eC5">Prossimità servizi (trasporti, scuole)</label></div>
+              <div class="el-item"><input type="checkbox" id="eC6" class="el-c"><label for="eC6">Climatizzazione e/o insonorizzazione</label></div>
+              <div class="el-item"><input type="checkbox" id="eC7" class="el-c"><label for="eC7">Porte blindate e/o doppi vetri</label></div>
+              <div class="el-item"><input type="checkbox" id="eC8" class="el-c"><label for="eC8">Terrazzi &gt; 20 mq o superfici esclusive</label></div>
+              <div class="el-item"><input type="checkbox" id="eC9" class="el-c"><label for="eC9">Lontananza da fonti di inquinamento</label></div>
+              <div class="el-item"><input type="checkbox" id="eC10" class="el-c"><label for="eC10">Verde esclusivo</label></div>
+            </div>
+          </div>
+          <div class="counter-row" id="counters"></div>
+          <div class="suggerita-box">
+            <div><span class="suggerita-label">Sub-fascia suggerita</span><strong class="suggerita-value" id="suggerita-label">—</strong></div>
+            <button class="btn-sm" id="btn-apply-fascia" type="button">Applica</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. SUPERFICIE -->
+    <div class="card">
+      <p class="card-title">Superficie</p>
+      <div class="field">
+        <label class="field-label" for="mq">Mq utili <small>— DPR 138/98, tolleranza ±5%</small></label>
+        <div class="input-row">
+          <input type="number" class="input-mq" id="mq" value="90" min="10" max="400" step="1">
+          <span class="input-unit">mq</span>
+          <span id="mq-tag" class="tag"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. ARREDAMENTO -->
+    <div class="card">
+      <p class="card-title">Arredamento</p>
+      <div class="radio-pills">
+        <div class="radio-pill"><input type="radio" name="arredo" id="a0" value="0"><label for="a0">Non arredato</label></div>
+        <div class="radio-pill"><input type="radio" name="arredo" id="a10" value="10"><label for="a10">Parziale</label></div>
+        <div class="radio-pill"><input type="radio" name="arredo" id="a20" value="20" checked><label for="a20">Completo +20%</label></div>
+      </div>
+    </div>
+
+    <!-- 6. PERTINENZE -->
+    <div class="card">
+      <p class="card-title">Pertinenze</p>
+      <div class="checkbox-grid">
+        <div class="check-item"><input type="checkbox" id="p-balcone"><label for="p-balcone">Balconi/terrazze <span class="check-pct">+25%</span></label></div>
+        <div class="check-item"><input type="checkbox" id="p-cantina"><label for="p-cantina">Cantina/solaio <span class="check-pct">+25%</span></label></div>
+        <div class="check-item"><input type="checkbox" id="p-box"><label for="p-box">Autorimessa/box <span class="check-pct">+50%</span></label></div>
+        <div class="check-item"><input type="checkbox" id="p-posto"><label for="p-posto">Posto auto <span class="check-pct">+25%</span></label></div>
+        <div class="check-item"><input type="checkbox" id="p-verde"><label for="p-verde">Verde esclusivo <span class="check-pct">+10%</span></label></div>
+      </div>
+    </div>
+
+    <!-- RISULTATO -->
+    <div class="result-box">
+      <p class="result-eyebrow">Canone mensile massimo (lordo)</p>
+      <p class="result-range" id="result-range">—</p>
+      <div class="result-meta" id="result-meta"></div>
+    </div>
+
+    <!-- BREAKDOWN -->
+    <div class="breakdown">
+      <p class="breakdown-title">Dettaglio calcolo</p>
+      <div id="breakdown-steps"></div>
+      <p class="small-note">Aggiornamento annuale: 75% variazione ISTAT (sospeso con cedolare secca). Attestazione di rispondenza: ALPE (Via C. Cattaneo 76, Lecco) o ASPPI.</p>
+    </div>
+
+    <!-- 7. CONFRONTO FISCALE -->
+    <div class="card">
+      <p class="card-title">Confronto fiscale — canone libero</p>
+      <div class="field">
+        <label class="field-label" for="canone-libero">Canone mensile stimato a mercato libero</label>
+        <div class="input-row">
+          <input type="number" class="input-euro" id="canone-libero" value="700" min="0" step="10">
+          <span class="input-unit">€/mese</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-wrap">
+      <div class="compare-header">Netto annuo dopo cedolare secca</div>
+      <div class="compare-cols">
+        <div class="compare-col">
+          <span class="compare-badge concordato">Concordato</span>
+          <p class="compare-col-title">Concordato</p>
+          <p class="compare-col-sub">Cedolare 10%</p>
+          <div id="col-concordato"></div>
+        </div>
+        <div class="compare-col">
+          <span class="compare-badge libero">Libero</span>
+          <p class="compare-col-title">Mercato libero</p>
+          <p class="compare-col-sub">Cedolare 21%</p>
+          <div id="col-libero"></div>
+        </div>
+      </div>
+      <div class="winner-bar">
+        <span class="winner-text" id="winner-text"></span>
+        <span class="winner-tag" id="winner-tag"></span>
+      </div>
+    </div>
+
+    <!-- NOTE FISCALI -->
+    <div class="breakdown">
+      <p class="breakdown-title">Note fiscali</p>
+      <div class="step-row"><span class="step-label">Cedolare concordato</span><span class="step-value">10%</span></div>
+      <div class="step-row"><span class="step-label">Cedolare mercato libero</span><span class="step-value">21%</span></div>
+      <div class="step-row"><span class="step-label">Riduzione IMU concordato (Lecco)</span><span class="step-value">–25%</span></div>
+      <div class="step-row"><span class="step-label">ISTAT annuale (concordato)</span><span class="step-value">75% variazione</span></div>
+      <p class="small-note">Il confronto usa il canone massimo concordato. L'IMU non è inclusa — verificare con CAF o ALPE. La zona dal selettore è indicativa.</p>
+    </div>
+
+    <p class="footer-note">
+      Accordo Territoriale Comune di Lecco, 6 giugno 2018 · L. 431/98 · D.M. 16/01/2017<br>
+      Dati indicativi — non costituisce consulenza legale o fiscale · LECTO
+    </p>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <a class="nav-item" href="index.html"><span class="nav-item-icon">🏠</span><span class="nav-item-label">Stanze</span></a>
+    <a class="nav-item" href="proprietario.html"><span class="nav-item-icon">🔑</span><span class="nav-item-label">Proprietari</span></a>
+    <a class="nav-item active" href="#"><span class="nav-item-icon">🧮</span><span class="nav-item-label">Calcolatore</span></a>
+  </div>
+
+</div>
+
+<script>
+  /* ── DATI ── */
+  const FASCE = {
+    1: [
+      { min: 51, max: 62,  label: 'Sub-Fascia 1', cond: 'Manca ≥1 essenziale' },
+      { min: 62, max: 76,  label: 'Sub-Fascia 2', cond: 'Tutti gli essenziali' },
+      { min: 76, max: 93,  label: 'Sub-Fascia 3', cond: 'Essenziali + ≥8 B+C' }
+    ],
+    2: [
+      { min: 36, max: 49,  label: 'Sub-Fascia 1', cond: 'Manca ≥1 essenziale' },
+      { min: 49, max: 63,  label: 'Sub-Fascia 2', cond: 'Tutti gli essenziali' },
+      { min: 63, max: 77,  label: 'Sub-Fascia 3', cond: 'Essenziali + ≥8 B+C' }
+    ],
+    3: [
+      { min: 19, max: 35,  label: 'Sub-Fascia 1', cond: 'Manca ≥1 essenziale' },
+      { min: 35, max: 53,  label: 'Sub-Fascia 2', cond: 'Tutti gli essenziali' },
+      { min: 53, max: 64,  label: 'Sub-Fascia 3', cond: 'Essenziali + ≥8 B+C' }
+    ]
+  };
+  const ZONE_NAMES = { 1: 'Centro', 2: 'Intermedia', 3: 'Periferia' };
+
+  const AREE = [
+    { name: 'Centro storico',         streets: 'Piazza Garibaldi, Corso Martiri, Via Cavour, Via Roma',        zona: 1, certain: true },
+    { name: 'Lungolago / Piazza Era', streets: 'Via Amendola, Piazza Era, Viale Turati',                        zona: 1, certain: true },
+    { name: 'Tribunale / Politecnico',streets: 'Via Ghislanzoni, Via Besana, Via Amendola',                     zona: 1, certain: true },
+    { name: "Via dell'Isola",         streets: "Via dell'Isola, Via Aspromonte",                                zona: 1, certain: false },
+    { name: 'Corso Carlo Alberto',    streets: 'Corso Carlo Alberto, Piazza Lega Lombarda',                     zona: 1, certain: false },
+    { name: 'Via Belvedere',          streets: 'Via Belvedere, Via Resinelli, Via S. Sassi',                    zona: 1, certain: true },
+    { name: 'Castello / Cortesella',  streets: 'Via Castello, Via Azzone Visconti, Via Cantù',                  zona: 1, certain: true },
+    { name: 'Ponte Vecchio',          streets: 'Corso Martiri, Via Ponte Vecchio',                              zona: 1, certain: true },
+    { name: 'Via Como (centrale)',    streets: 'Via Como, Via Goito',                                           zona: 1, certain: false },
+    { name: 'Pescarenico',            streets: 'Via Roma (sud), Via Pescarenico',                               zona: 2, certain: true },
+    { name: 'Olate',                  streets: 'Via Olate, Via Fornace',                                        zona: 2, certain: true },
+    { name: 'Acquate (bassa)',        streets: 'Via Acquate, Via Piave',                                        zona: 2, certain: true },
+    { name: 'Germanedo (bassa)',      streets: 'Via Germanedo, Via Montegrappa',                                 zona: 2, certain: true },
+    { name: 'Rancio Inferiore',       streets: 'Via Rancio, Via Ai Ronchi',                                     zona: 2, certain: false },
+    { name: 'San Giovanni',           streets: 'Via S. Giovanni, Via Martiri Lecchesi',                         zona: 2, certain: false },
+    { name: 'Via Poncione',           streets: 'Via Poncione, Maggianico alta',                                 zona: 2, certain: false },
+    { name: 'Maggianico (ovest)',     streets: 'Via Roma (nord), Via Pasubio, Via Maggianico',                  zona: 2, certain: false },
+    { name: 'Laorca',                 streets: 'Via Laorca, Via alle Cascine',                                  zona: 3, certain: true },
+    { name: 'Malavedo',               streets: 'Via Malavedo, Loc. Cereda',                                     zona: 3, certain: true },
+    { name: 'Rancio Superiore',       streets: 'Via Rancio Superiore, Via al Santuario',                        zona: 3, certain: true },
+    { name: 'Santo Stefano',          streets: 'Via Santo Stefano, Via Pola, Via Leopardi',                     zona: 3, certain: true },
+    { name: 'Caleotto',               streets: 'Via Caleotto, Centro Sportivo del Bione',                       zona: 3, certain: true },
+    { name: 'Acquate (alta)',         streets: 'Via Acquate alta, Via Ai Monti',                                zona: 3, certain: true },
+    { name: 'Germanedo (alta)',       streets: 'Via Germanedo alta, Via Ospedale',                              zona: 3, certain: true },
+    { name: 'Maggianico (est)',       streets: 'Via Maggianico, Via Digione',                                   zona: 3, certain: false },
+    { name: 'Bonacina / Falghera',    streets: 'Via Bonacina, Loc. Falghera',                                   zona: 3, certain: true },
+    { name: 'Malnago',               streets: 'Loc. Malnago, Via Malnago',                                     zona: 3, certain: true },
+  ];
+
+  const TAX_CONC = 0.10, TAX_LIB = 0.21;
+  let suggeritaFascia = 2, selectedZonaSearch = null;
+
+  const fmt  = n => '€' + Math.round(n).toLocaleString('it-IT');
+  const fmtR = (a, b) => fmt(a) + ' – ' + fmt(b);
+  const getZona   = () => parseInt(document.querySelector('input[name=zona]:checked').value);
+  const getFascia = () => { const el = document.querySelector('input[name=fascia]:checked'); return el ? parseInt(el.value) : 2; };
+
+  function buildFasciaGrid(zona, sel) {
+    const grid = document.getElementById('fascia-grid');
+    grid.innerHTML = FASCE[zona].map((f, i) => {
+      const idx = i + 1;
+      return `<div class="fascia-card"><input type="radio" name="fascia" id="f${idx}" value="${idx}"${sel === idx ? ' checked' : ''}><label for="f${idx}"><span class="fascia-name">${f.label}</span><span class="fascia-cond">${f.cond}</span><span class="fascia-range">€${f.min} – ${f.max} /mq/anno</span></label></div>`;
+    }).join('');
+    document.querySelectorAll('input[name=fascia]').forEach(r => r.addEventListener('change', calc));
+  }
+
+  /* Search */
+  const searchInput = document.getElementById('search-input');
+  const dropdown = document.getElementById('search-dropdown');
+  const zonaResult = document.getElementById('zona-result');
+  const zonaWarn = document.getElementById('zona-warning');
+
+  function renderDropdown(q) {
+    q = q.toLowerCase().trim();
+    if (q.length < 2) { dropdown.innerHTML = ''; dropdown.classList.remove('open'); return; }
+    const hits = AREE.filter(a => a.name.toLowerCase().includes(q) || a.streets.toLowerCase().includes(q));
+    if (!hits.length) { dropdown.innerHTML = '<div class="dd-item" style="justify-content:center;color:var(--muted)">Nessun risultato</div>'; dropdown.classList.add('open'); return; }
+    dropdown.innerHTML = hits.map(a => `<div class="dd-item" data-idx="${AREE.indexOf(a)}"><div><span class="dd-name">${a.name}</span><span class="dd-streets">${a.streets}</span></div><span class="dd-zone z${a.zona}">Zona ${a.zona}</span></div>`).join('');
+    dropdown.classList.add('open');
+    dropdown.querySelectorAll('.dd-item[data-idx]').forEach(el => { el.addEventListener('click', () => selectArea(AREE[parseInt(el.dataset.idx)])); });
+  }
+
+  function selectArea(area) {
+    searchInput.value = area.name; dropdown.innerHTML = ''; dropdown.classList.remove('open');
+    selectedZonaSearch = area.zona;
+    document.getElementById('zona-result-area').textContent = area.name;
+    document.getElementById('zona-result-zona').textContent = 'Zona ' + area.zona + ' (' + ZONE_NAMES[area.zona] + ')';
+    zonaResult.classList.add('visible');
+    if (!area.certain) { zonaWarn.style.display = 'block'; zonaWarn.textContent = 'Area di confine — verificare con ALPE prima di stipulare.'; }
+    else { zonaWarn.style.display = 'none'; }
+  }
+
+  searchInput.addEventListener('input', e => renderDropdown(e.target.value));
+  searchInput.addEventListener('focus', e => { if (e.target.value.length >= 2) renderDropdown(e.target.value); });
+  document.addEventListener('click', e => { if (!e.target.closest('.search-wrap')) dropdown.classList.remove('open'); });
+  document.getElementById('btn-apply-zona').addEventListener('click', () => {
+    if (!selectedZonaSearch) return;
+    document.getElementById('z' + selectedZonaSearch).checked = true;
+    buildFasciaGrid(selectedZonaSearch, getFascia()); calc();
+  });
+
+  /* Accordion */
+  document.getElementById('acc-trigger').addEventListener('click', function() { this.classList.toggle('open'); document.getElementById('acc-body').classList.toggle('open'); });
+
+  /* Suggerita */
+  function updateSuggerita() {
+    const nA = document.querySelectorAll('.el-a:checked').length;
+    const nB = document.querySelectorAll('.el-b:checked').length;
+    const nC = document.querySelectorAll('.el-c:checked').length;
+    document.getElementById('counters').innerHTML = `<span class="counter a">A: ${nA}/4</span><span class="counter b">B: ${nB}/8</span><span class="counter c">C: ${nC}/10</span>`;
+    let fascia, desc;
+    if (nA < 4) { fascia = 1; desc = 'Sub-Fascia 1 — mancano essenziali'; }
+    else if (nB + nC >= 8 && nC >= 2) { fascia = 3; desc = 'Sub-Fascia 3 — requisiti soddisfatti'; }
+    else { fascia = 2; desc = `Sub-Fascia 2 (${nB+nC}/8 B+C)`; }
+    suggeritaFascia = fascia;
+    document.getElementById('suggerita-label').textContent = desc;
+  }
+  document.querySelectorAll('.el-a, .el-b, .el-c').forEach(cb => cb.addEventListener('change', updateSuggerita));
+  document.getElementById('btn-apply-fascia').addEventListener('click', () => { const r = document.getElementById('f' + suggeritaFascia); if (r) { r.checked = true; calc(); } });
+
+  /* Calcolo */
+  function colRows(rows) { return rows.map(r => `<div class="compare-row"><span class="compare-row-label">${r.label}</span><span class="compare-row-val ${r.cls||''}">${r.value}</span></div>`).join(''); }
+
+  function calc() {
+    const zona = getZona(), fasciaIdx = getFascia(), fascia = FASCE[zona][fasciaIdx-1];
+    const mq = parseFloat(document.getElementById('mq').value) || 0;
+    const arredoPct = parseFloat(document.querySelector('input[name=arredo]:checked').value);
+    const balcone = document.getElementById('p-balcone').checked;
+    const cantina = document.getElementById('p-cantina').checked;
+    const box = document.getElementById('p-box').checked;
+    const posto = document.getElementById('p-posto').checked;
+    const verde = document.getElementById('p-verde').checked;
+    const liberoM = parseFloat(document.getElementById('canone-libero').value) || 0;
+
+    let steps = [], minBase = fascia.min, maxBase = fascia.max, mqCalc = mq;
+    let tag = '', tagClass = '';
+
+    steps.push({ label: `Base Zona ${zona} · ${fascia.label}`, value: `${fascia.min}–${fascia.max} €/mq/anno` });
+
+    if (mq < 65) { minBase *= 1.25; maxBase *= 1.25; mqCalc = Math.min(mq, 65); steps.push({ label: '< 65 mq → +25%', value: `${minBase.toFixed(1)}–${maxBase.toFixed(1)}`, hl: true }); tag = '< 65 mq +25%'; tagClass = 'tag-warn'; }
+    else if (mq > 120) { minBase *= 0.80; maxBase *= 0.80; mqCalc = Math.max(mq, 120); steps.push({ label: '> 120 mq → −20%', value: `${minBase.toFixed(1)}–${maxBase.toFixed(1)}`, hl: true }); tag = '> 120 mq −20%'; tagClass = 'tag-info'; }
+    else { tag = 'standard'; tagClass = 'tag-ok'; }
+
+    steps.push({ label: 'Mq calcolati', value: `${mqCalc.toFixed(0)} mq` });
+    let annMin = minBase * mqCalc, annMax = maxBase * mqCalc;
+    steps.push({ label: 'Canone annuo base', value: fmtR(annMin, annMax) });
+
+    if (arredoPct > 0) { annMin *= (1 + arredoPct/100); annMax *= (1 + arredoPct/100); steps.push({ label: `Arredamento +${arredoPct}%`, value: fmtR(annMin, annMax), hl: true }); }
+
+    let pertTot = 0, pertLines = [];
+    if (balcone) { pertTot += .25; pertLines.push('balconi'); } if (cantina) { pertTot += .25; pertLines.push('cantina'); }
+    if (box) { pertTot += .50; pertLines.push('box'); } if (posto) { pertTot += .25; pertLines.push('posto auto'); }
+    if (verde) { pertTot += .10; pertLines.push('verde'); }
+    let pertMin = 0, pertMax = 0;
+    if (pertTot > 0) { pertMin = annMin * pertTot; pertMax = annMax * pertTot; steps.push({ label: `Pertinenze (${pertLines.join(', ')})`, value: fmtR(pertMin, pertMax), hl: true }); }
+
+    const totMin = annMin + pertMin, totMax = annMax + pertMax;
+    steps.push({ label: 'Totale annuo lordo', value: fmtR(totMin, totMax) });
+    const mensMin = totMin / 12, mensMax = totMax / 12;
+
+    document.getElementById('mq-tag').textContent = tag; document.getElementById('mq-tag').className = 'tag ' + tagClass;
+    document.getElementById('result-range').textContent = fmtR(mensMin, mensMax) + ' /mese';
+    document.getElementById('result-meta').innerHTML = `<div class="result-meta-item"><strong>Zona ${zona} · ${ZONE_NAMES[zona]}</strong>posizione</div><div class="result-meta-item"><strong>${fascia.label}</strong>classificazione</div><div class="result-meta-item"><strong>${fmtR(totMin, totMax)}</strong>annuo lordo</div>`;
+    document.getElementById('breakdown-steps').innerHTML = steps.map(s => `<div class="step-row"><span class="step-label">${s.label}</span><span class="step-value${s.hl?' highlight':''}">${s.value}</span></div>`).join('');
+
+    /* Confronto */
+    const concAnn = totMax, concTassa = concAnn * TAX_CONC, concNetto = concAnn - concTassa;
+    const libAnn = liberoM * 12, libTassa = libAnn * TAX_LIB, libNetto = libAnn - libTassa;
+
+    document.getElementById('col-concordato').innerHTML = colRows([
+      { label: 'Lordo annuo (max)', value: fmt(concAnn) },
+      { label: 'Cedolare 10%', value: '–' + fmt(concTassa), cls: 'neg' },
+      { label: 'Netto annuo', value: fmt(concNetto), cls: 'pos' },
+      { label: 'Netto/mese', value: fmt(concNetto/12), cls: 'pos' },
+    ]);
+    document.getElementById('col-libero').innerHTML = colRows([
+      { label: 'Lordo annuo', value: fmt(libAnn) },
+      { label: 'Cedolare 21%', value: '–' + fmt(libTassa), cls: 'neg' },
+      { label: 'Netto annuo', value: fmt(libNetto), cls: 'pos' },
+      { label: 'Netto/mese', value: fmt(libNetto/12), cls: 'pos' },
+    ]);
+
+    const delta = concNetto - libNetto, absD = Math.abs(delta);
+    const wt = document.getElementById('winner-text'), wtag = document.getElementById('winner-tag');
+    if (absD < 100) { wt.textContent = 'Sostanzialmente equivalenti'; wtag.textContent = 'Pari'; wtag.className = 'winner-tag pari'; }
+    else if (delta > 0) { wt.textContent = `Concordato: +${fmt(absD)}/anno`; wtag.textContent = 'Concordato'; wtag.className = 'winner-tag concordato-wins'; }
+    else { wt.textContent = `Mercato libero: +${fmt(absD)}/anno`; wtag.textContent = 'Libero'; wtag.className = 'winner-tag libero-wins'; }
+  }
+
+  /* Events */
+  document.querySelectorAll('input[name=zona]').forEach(r => r.addEventListener('change', () => { buildFasciaGrid(getZona(), getFascia()); calc(); }));
+  document.getElementById('mq').addEventListener('input', calc);
+  document.querySelectorAll('input[name=arredo]').forEach(r => r.addEventListener('change', calc));
+  ['p-balcone','p-cantina','p-box','p-posto','p-verde'].forEach(id => document.getElementById(id).addEventListener('change', calc));
+  document.getElementById('canone-libero').addEventListener('input', calc);
+
+  /* Init */
+  buildFasciaGrid(1, 3);
+  updateSuggerita();
+  calc();
+</script>
+</body>
+</html>
