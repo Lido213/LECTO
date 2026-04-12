@@ -164,7 +164,7 @@
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       overscroll-behavior-y: contain;
-      padding: .75rem 1.25rem 6rem;
+      padding: .75rem 1.25rem 2rem;
     }
 
     /* ── CARD / SECTION ── */
@@ -481,7 +481,13 @@
     @media (min-width: 640px) {
       .app { max-width: 720px; }
       .result-range { font-size: 2rem; }
-      .scroll-content { padding: 1.25rem 2rem 4rem; }
+      .scroll-content { padding: 1.25rem 2rem 2rem; }
+    }
+    @media (min-width: 1024px) {
+      .app { max-width: 900px; border-radius: 12px; margin-top: 2rem; margin-bottom: 2rem; min-height: calc(100vh - 4rem); }
+      .scroll-content { padding: 1.5rem 3rem 2.5rem; }
+      .zona-grid { grid-template-columns: repeat(3, 1fr); }
+      .fascia-grid { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
 </head>
@@ -494,9 +500,6 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
       Proprietari
     </a>
-    <div class="header-right">
-      <span class="header-badge">Strumento</span>
-    </div>
   </div>
 
   <!-- HERO -->
@@ -705,12 +708,6 @@
 
   </div>
 
-  <!-- BOTTOM NAV -->
-  <div class="bottom-nav">
-    <a class="nav-item" href="index.html"><span class="nav-item-icon">🏠</span><span class="nav-item-label">Stanze</span></a>
-    <a class="nav-item" href="proprietario.html"><span class="nav-item-icon">🔑</span><span class="nav-item-label">Proprietari</span></a>
-    <a class="nav-item active" href="#"><span class="nav-item-icon">🧮</span><span class="nav-item-label">Calcolatore</span></a>
-  </div>
 
 </div>
 
