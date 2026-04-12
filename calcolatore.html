@@ -516,10 +516,10 @@
       <p class="card-title">Trova la zona dal quartiere</p>
       <div class="field">
         <label class="field-label" for="search-input">
-          Cerca quartiere o via <small>— verifica con ALPE/ASPPI Lecco</small>
+          Cerca quartiere <small>— verifica con ALPE/ASPPI Lecco</small>
         </label>
         <div class="search-wrap">
-          <input type="text" class="input-search" id="search-input" placeholder="Es. Pescarenico, Via dell'Isola…" autocomplete="off">
+          <input type="text" class="input-search" id="search-input" placeholder="Es. Pescarenico, Laorca, Centro storico…" autocomplete="off">
           <div class="search-dropdown" id="search-dropdown"></div>
         </div>
         <div class="zona-result" id="zona-result">
@@ -788,9 +788,9 @@
   function renderDropdown(q) {
     q = q.toLowerCase().trim();
     if (q.length < 2) { dropdown.innerHTML = ''; dropdown.classList.remove('open'); return; }
-    const hits = AREE.filter(a => a.name.toLowerCase().includes(q) || a.streets.toLowerCase().includes(q));
+    const hits = AREE.filter(a => a.name.toLowerCase().includes(q));
     if (!hits.length) { dropdown.innerHTML = '<div class="dd-item" style="justify-content:center;color:var(--muted)">Nessun risultato</div>'; dropdown.classList.add('open'); return; }
-    dropdown.innerHTML = hits.map(a => `<div class="dd-item" data-idx="${AREE.indexOf(a)}"><div><span class="dd-name">${a.name}</span><span class="dd-streets">${a.streets}</span></div><span class="dd-zone z${a.zona}">Zona ${a.zona}</span></div>`).join('');
+    dropdown.innerHTML = hits.map(a => `<div class="dd-item" data-idx="${AREE.indexOf(a)}"><span class="dd-name">${a.name}</span><span class="dd-zone z${a.zona}">Zona ${a.zona}</span></div>`).join('');
     dropdown.classList.add('open');
     dropdown.querySelectorAll('.dd-item[data-idx]').forEach(el => { el.addEventListener('click', () => selectArea(AREE[parseInt(el.dataset.idx)])); });
   }
